@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="CubeData.cpp" />
     <ClCompile Include="main.cpp" />
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Chunk.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="CubeData.h" />
     <ClInclude Include="Shaders\ShaderLoader.h" />

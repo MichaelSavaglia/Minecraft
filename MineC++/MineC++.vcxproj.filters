@@ -6,12 +6,14 @@
     <ClCompile Include="Shaders\ShaderLoader.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CubeData.cpp" />
+    <ClCompile Include="Chunk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
     <ClInclude Include="Shaders\ShaderLoader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CubeData.h" />
+    <ClInclude Include="Chunk.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

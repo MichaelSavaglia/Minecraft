@@ -1,6 +1,8 @@
 #include "Core.h"
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
+#include <gtx\transform.hpp>
+
 #include <vector>
 #include <iostream>
 
@@ -10,6 +12,7 @@
 #include "Shaders/ShaderLoader.h"
 #include "Camera.h"
 #include "CubeData.h"
+#include "Chunk.h"
 Core::Core()
 {
 }
@@ -88,7 +91,6 @@ bool Core::Init()
 	GLuint MatrixID = glGetUniformLocation(ProgramID, "MVP");
 
 	Camera* cam = new Camera(window);
-
 	do
 	{
 
@@ -99,24 +101,35 @@ bool Core::Init()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(ProgramID);
+		for (size_t x = 0; x < 32; ++x)
+		{
+			for (size_t z = 0; z < 32; ++z)
+			{
+				//for (size_t y = 0; y < 64; ++y)
+				//{
 
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+					glEnableVertexAttribArray(0);
+					glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+					glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+					glEnableVertexAttribArray(1);
+					glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+					glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 			
-		auto projection = cam->GetProjectionMatrix();
-		auto view = cam->GetViewMatrix();
-		glm::mat4 mvp = projection * view * Model;
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+					auto projection = cam->GetProjectionMatrix();
+					auto view = cam->GetViewMatrix();
+					glm::vec3 pos = glm::vec3(x*2, 0, z*2);
+					Model = glm::translate(pos);
+					glm::mat4 mvp = projection * view * Model;
+					glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
+					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+					glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
 
-		glDisableVertexAttribArray(0);
+					glDisableVertexAttribArray(0);
+				//}
+			}
+		}
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
