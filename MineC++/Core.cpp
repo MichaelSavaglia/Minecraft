@@ -1,5 +1,5 @@
 #include "Core.h"
-#include "ShaderLoader.h"
+#include "Shaders/ShaderLoader.h"
 
 
 Core::Core()
@@ -65,7 +65,7 @@ bool Core::Init()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
 	GLuint ProgramID;
-	ProgramID = LoadShaders("Shaders/VertexShader.glsl", "Shaders/FragmentShader.glsl");
+	ProgramID = ShaderUtil::LoadShaders("Shaders/VertexShader.glsl", "Shaders/FragmentShader.glsl");
 
 	do
 	{
