@@ -55,39 +55,28 @@ bool Core::Init()
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
-	//static const GLfloat g_vertex_buffer_data[] = {
-	//	-1.0, -1.0,  1.0,
-	//	1.0, -1.0,  1.0,
-	//	1.0,  1.0,  1.0,
-	//	-1.0,  1.0,  1.0,
-	//	-1.0, -1.0, -1.0,
-	//	1.0, -1.0, -1.0,
-	//	1.0,  1.0, -1.0,
-	//	-1.0,  1.0, -1.0,
-	//};
-
 	static const GLfloat g_vertex_buffer_data[] = {
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		0.0f,  1.0f, 0.0f,
+		-1.0, -1.0,  1.0,
+		1.0, -1.0,  1.0,
+		1.0,  1.0,  1.0,
+		-1.0,  1.0,  1.0,
+		-1.0, -1.0, -1.0,
+		1.0, -1.0, -1.0,
+		1.0,  1.0, -1.0,
+		-1.0,  1.0, -1.0,
 	};
+
 
 	static const GLfloat g_vertex_color_data[] = {
-		1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f,  0.0f, 1.0f,
+		1.0, 0.0, 0.0,
+		0.0, 1.0, 0.0,
+		0.0, 0.0, 1.0,
+		1.0, 1.0, 1.0,
+		1.0, 0.0, 0.0,
+		0.0, 1.0, 0.0,
+		0.0, 0.0, 1.0,
+		1.0, 1.0, 1.0,
 	};
-
-	/*static const GLfloat g_vertex_color_data[] = {
-		1.0, 0.0, 0.0,
-		0.0, 1.0, 0.0,
-		0.0, 0.0, 1.0,
-		1.0, 1.0, 1.0,
-		1.0, 0.0, 0.0,
-		0.0, 1.0, 0.0,
-		0.0, 0.0, 1.0,
-		1.0, 1.0, 1.0,
-	};*/
 
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
@@ -99,8 +88,7 @@ bool Core::Init()
 	glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_color_data), g_vertex_color_data, GL_STATIC_DRAW);
 
-	std::vector<unsigned short> indices{ 0,1,2 };
-	/*std::vector<unsigned short> indices{
+	std::vector<unsigned short> indices{
 		// front
 		0, 1, 2,
 		2, 3, 0,
@@ -119,7 +107,7 @@ bool Core::Init()
 		// right
 		3, 2, 6,
 		6, 7, 3,
-	};*/
+	};
 
 	GLuint elementBuffer;
 	glGenBuffers(1, &elementBuffer);
@@ -140,7 +128,7 @@ bool Core::Init()
 
 	GLuint MatrixID = glGetUniformLocation(ProgramID, "MVP");
 
-	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+	
 
 	do
 	{
@@ -156,7 +144,7 @@ bool Core::Init()
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 			
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
-
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
 
