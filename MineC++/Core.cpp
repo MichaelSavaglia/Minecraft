@@ -1,6 +1,6 @@
 #include "Core.h"
 #include "Shaders/ShaderLoader.h"
-
+#include <glm.hpp>
 
 Core::Core()
 {
@@ -18,7 +18,6 @@ bool Core::Init()
 		std::cout << "Failed to initialise GLFW" << std::endl;
 		return false;
 	}
-
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
@@ -26,7 +25,6 @@ bool Core::Init()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	GLFWwindow* window;
-
 	window = glfwCreateWindow(1280, 720, "MineC++", NULL, NULL);
 
 	if (window == NULL)
@@ -79,6 +77,7 @@ bool Core::Init()
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glDisableVertexAttribArray(0);
 
+		glm::vec2 x = glm::vec2(1.0, 0.0);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	} while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
