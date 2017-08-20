@@ -28,8 +28,7 @@ bool Core::Init()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	
 
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+
 
 	GLFWwindow* window;
 	window = glfwCreateWindow(1280, 720, "MineC++", NULL, NULL);
@@ -64,6 +63,7 @@ bool Core::Init()
 		1.0, -1.0,  1.0,
 		1.0,  1.0,  1.0,
 		-1.0,  1.0,  1.0,
+		// back
 		-1.0, -1.0, -1.0,
 		1.0, -1.0, -1.0,
 		1.0,  1.0, -1.0,
@@ -93,7 +93,6 @@ bool Core::Init()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_color_data), g_vertex_color_data, GL_STATIC_DRAW);
 
 	std::vector<unsigned short> indices{
-		// front
 		0, 1, 2,
 		2, 3, 0,
 		// top
@@ -113,9 +112,9 @@ bool Core::Init()
 		6, 7, 3,
 	};
 
-	GLuint elementBuffer;
-	glGenBuffers(1, &elementBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
+	GLuint indexBuffer;
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
 
 	GLuint ProgramID;
@@ -129,7 +128,12 @@ bool Core::Init()
 
 	do
 	{
+
 		cam->Update(true);
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(ProgramID);
 
@@ -141,12 +145,12 @@ bool Core::Init()
 		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 			
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
 
 		glDisableVertexAttribArray(0);
