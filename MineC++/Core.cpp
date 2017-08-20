@@ -1,10 +1,15 @@
 #include "Core.h"
-#include "Shaders/ShaderLoader.h"
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
+#include <vector>
+#include <iostream>
 
+#include <glew.h>
+#include <glfw3.h>
+
+#include "Shaders/ShaderLoader.h"
 #include "Camera.h"
-
+#include "CubeData.h"
 Core::Core()
 {
 }
@@ -58,64 +63,22 @@ bool Core::Init()
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
-	static const GLfloat g_vertex_buffer_data[] = {
-		-1.0, -1.0,  1.0,
-		1.0, -1.0,  1.0,
-		1.0,  1.0,  1.0,
-		-1.0,  1.0,  1.0,
-		// back
-		-1.0, -1.0, -1.0,
-		1.0, -1.0, -1.0,
-		1.0,  1.0, -1.0,
-		-1.0,  1.0, -1.0,
-	};
-
-
-	static const GLfloat g_vertex_color_data[] = {
-		1.0, 0.0, 0.0,
-		0.0, 1.0, 0.0,
-		0.0, 0.0, 1.0,
-		1.0, 1.0, 1.0,
-		1.0, 0.0, 0.0,
-		0.0, 1.0, 0.0,
-		0.0, 0.0, 1.0,
-		1.0, 1.0, 1.0,
-	};
 
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, CubeData::mVertices.size() * sizeof(GLfloat), &CubeData::mVertices[0], GL_STATIC_DRAW);
 
 	GLuint colorBuffer;
 	glGenBuffers(1, &colorBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_color_data), g_vertex_color_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, CubeData::mColors.size() * sizeof(GLfloat), &CubeData::mColors[0], GL_STATIC_DRAW);
 
-	std::vector<unsigned short> indices{
-		0, 1, 2,
-		2, 3, 0,
-		// top
-		1, 5, 6,
-		6, 2, 1,
-		// back
-		7, 6, 5,
-		5, 4, 7,
-		// bottom
-		4, 0, 3,
-		3, 7, 4,
-		// left
-		4, 5, 1,
-		1, 0, 4,
-		// right
-		3, 2, 6,
-		6, 7, 3,
-	};
 
 	GLuint indexBuffer;
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0], GL_STATIC_DRAW);
 
 	GLuint ProgramID;
 	ProgramID = ShaderUtil::LoadShaders("Shaders/VertexShader.glsl", "Shaders/FragmentShader.glsl");
@@ -151,7 +114,7 @@ bool Core::Init()
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
+		glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
 
 		glDisableVertexAttribArray(0);
 

@@ -1,4 +1,6 @@
-﻿  Core.cpp
-d:\tn studios\minecraft 2.0\minecraft\minec++\core.cpp(153): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+﻿  CubeData.cpp
+  Core.cpp
+d:\tn studios\minecraft 2.0\minecraft\minec++\core.cpp(117): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Generating Code...
   MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.exe
   MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)

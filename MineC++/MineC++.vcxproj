@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="CubeData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shaders\ShaderLoader.cpp" />
   </ItemGroup>
@@ -133,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="CubeData.h" />
     <ClInclude Include="Shaders\ShaderLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,13 +2,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <vector>
-#include <iostream>
 
-#include <glew.h>
-#include <glfw3.h>
-
-
+struct GLFWwindow;
 class Core
 {
 public:
