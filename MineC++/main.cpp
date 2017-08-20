@@ -2,6 +2,51 @@
 #include <glew.h>
 #include <glfw3.h>
 #include <iostream>
+#include <stdio.h>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <algorithm>
+
+GLuint LoadShaders(const char* VertexPath, const char* FragmentPath)
+{
+	using namespace std;
+
+	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+
+	//Loading Vertex Shader
+	string VertexShaderSource;
+	ifstream VertexShaderStream(VertexPath, ios::in);
+	if (VertexShaderStream.is_open())
+	{
+		string Line = "";
+		while (getline(VertexShaderStream, Line))
+			VertexShaderSource += "\n" + Line;
+		VertexShaderStream.close();
+	}
+
+	//Loading Fragment Shader
+	string FragmentShaderSource;
+	ifstream FragmentShaderStream(FragmentPath, ios::in);
+	if(FragmentShaderStream.is_open())
+	{
+		string Line = "";
+		while (getline(FragmentShaderStream, Line))
+			FragmentShaderSource += "\n" + Line;
+		VertexShaderStream.close();
+	}
+
+	GLint Result = GL_FALSE;
+
+	char const* VertexSourcePointer = VertexShaderSource.c_str();
+	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
+	glCompileShader(VertexShaderID);
+
+	//glGetShaderiv(VertexShaderID);
+	//glGetShaderiv()
+}
+
 
 int main(int argc, char** argv)
 {
@@ -42,8 +87,32 @@ int main(int argc, char** argv)
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
+	GLuint VertexArrayID;
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
+
+	static const GLfloat g_vertex_buffer_data[] = {
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		0.0f,  1.0f, 0.0f,
+	};
+
+	GLuint VertexBuffer;
+	glGenBuffers(1, &VertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+	CompileShaders();
+
 	do 
 	{
+		glEnableVertexAttribArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
+			//attribute, size, type, normalized, stride, array buffer offset
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDisableVertexAttribArray(0);
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
