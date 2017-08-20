@@ -40,5 +40,15 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+	do 
+	{
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+		glfwWindowShouldClose(window) == 0);
+
 	return 0;
 }
