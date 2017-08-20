@@ -1,16 +1,4 @@
 ﻿  Core.cpp
-d:\tn studios\minecraft 2.0\minecraft\minec++\core.cpp(148): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(window.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_tls.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_tls.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(winmm_joystick.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(winmm_joystick.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\glfw.pdb'; linking object as if no debug info
+d:\tn studios\minecraft 2.0\minecraft\minec++\core.cpp(161): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.exe
   MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)
