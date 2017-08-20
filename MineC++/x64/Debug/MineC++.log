@@ -1,3 +1,4 @@
 ﻿  Core.cpp
+d:\tn studios\minecraft 2.0\minecraft\minec++\core.cpp(108): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.exe
   MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)
