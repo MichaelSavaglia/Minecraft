@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Shaders\ShaderLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />
@@ -129,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="Shaders\ShaderLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
