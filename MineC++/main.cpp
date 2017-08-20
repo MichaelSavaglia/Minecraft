@@ -1,52 +1,5 @@
 #pragma once
-#include <glew.h>
-#include <glfw3.h>
-#include <iostream>
-#include <stdio.h>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <algorithm>
-
-GLuint LoadShaders(const char* VertexPath, const char* FragmentPath)
-{
-	using namespace std;
-
-	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
-	//Loading Vertex Shader
-	string VertexShaderSource;
-	ifstream VertexShaderStream(VertexPath, ios::in);
-	if (VertexShaderStream.is_open())
-	{
-		string Line = "";
-		while (getline(VertexShaderStream, Line))
-			VertexShaderSource += "\n" + Line;
-		VertexShaderStream.close();
-	}
-
-	//Loading Fragment Shader
-	string FragmentShaderSource;
-	ifstream FragmentShaderStream(FragmentPath, ios::in);
-	if(FragmentShaderStream.is_open())
-	{
-		string Line = "";
-		while (getline(FragmentShaderStream, Line))
-			FragmentShaderSource += "\n" + Line;
-		VertexShaderStream.close();
-	}
-
-	GLint Result = GL_FALSE;
-
-	char const* VertexSourcePointer = VertexShaderSource.c_str();
-	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
-	glCompileShader(VertexShaderID);
-
-	//glGetShaderiv(VertexShaderID);
-	//glGetShaderiv()
-}
-
+#include "ShaderLoader.h"
 
 int main(int argc, char** argv)
 {
@@ -102,10 +55,14 @@ int main(int argc, char** argv)
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
-	CompileShaders();
+	GLuint ProgramID;
+	ProgramID = LoadShaders("Shaders/VertexShader.glsl", "Shaders/FragmentShader.glsl");
 
 	do 
 	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glUseProgram(ProgramID);
+
 		glEnableVertexAttribArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
 			//attribute, size, type, normalized, stride, array buffer offset
