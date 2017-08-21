@@ -2,6 +2,8 @@
 #include "CubeData.h"
 #include "Cube.h"
 
+#include <gtc/matrix_transform.hpp>
+#include <gtx\transform.hpp>
 
 Chunk::Chunk()
 {
@@ -37,6 +39,7 @@ void Chunk::GenerateCubeData()
 			}
 		}
 	}
+	int count = 0;
 	for (size_t x = 1; x < 16 - 1; ++x)
 	{
 		for (size_t z = 1; z < 16 - 1; ++z)
@@ -50,13 +53,21 @@ void Chunk::GenerateCubeData()
 					mCubeData[x + 1][z][y]->GetType() == CubeData::CubeType::AIR ||
 					mCubeData[x - 1][z][y]->GetType() == CubeData::CubeType::AIR)				
 				{
-					mToDraw.push_back(glm::vec3(x, y, z));
-					mCubeData[x][z][y]->mShouldDraw = true;
-				}
-				else
-				{
-					mCubeData[x][z][y]->mShouldDraw = false;
-					int i = 0;
+					auto pos = glm::vec3(x * 2, y * 2, z * 2);
+					for (size_t i = 0; i < CubeData::mVertices.size(); i += 3)
+					{
+						mChunkMesh.push_back(CubeData::mVertices[i] + pos.x);
+						mChunkMesh.push_back(CubeData::mVertices[i + 1] + pos.y);
+						mChunkMesh.push_back(CubeData::mVertices[i + 2] + pos.z);
+						mChunkColours.push_back(CubeData::mColors[i]);
+						mChunkColours.push_back(CubeData::mColors[i+1]);
+						mChunkColours.push_back(CubeData::mColors[i+2]);
+					}
+					for (size_t i = 0; i < CubeData::mIndices.size(); ++i)
+					{
+						mChunkIndices.push_back(CubeData::mIndices[i] + count);
+					}
+					count += 8;
 				}
 			}
 		}

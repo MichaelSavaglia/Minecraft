@@ -1,7 +1,6 @@
 #include "Core.h"
 #include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtx\transform.hpp>
+
 
 #include <vector>
 #include <iostream>
@@ -63,6 +62,9 @@ bool Core::Init()
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
+	Chunk* chunk = new Chunk();
+	chunk->GenerateCubeData();
+
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
@@ -71,18 +73,18 @@ bool Core::Init()
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, CubeData::mVertices.size() * sizeof(GLfloat), &CubeData::mVertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, chunk->mChunkMesh.size() * sizeof(GLfloat), &chunk->mChunkMesh[0], GL_STATIC_DRAW);
 
 	GLuint colorBuffer;
 	glGenBuffers(1, &colorBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-	glBufferData(GL_ARRAY_BUFFER, CubeData::mColors.size() * sizeof(GLfloat), &CubeData::mColors[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, chunk->mChunkColours.size() * sizeof(GLfloat), &chunk->mChunkColours[0], GL_STATIC_DRAW);
 
 
 	GLuint indexBuffer;
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, chunk->mChunkIndices.size() * sizeof(unsigned short), &chunk->mChunkIndices[0], GL_STATIC_DRAW);
 
 	GLuint ProgramID;
 	ProgramID = ShaderUtil::LoadShaders("Shaders/VertexShader.glsl", "Shaders/FragmentShader.glsl");
@@ -92,10 +94,21 @@ bool Core::Init()
 	GLuint MatrixID = glGetUniformLocation(ProgramID, "MVP");
 
 	Camera* cam = new Camera(window);
-	Chunk* chunk = new Chunk();
-	chunk->GenerateCubeData();
+
+	double lastTime = glfwGetTime();
+	int nbFrames = 0;
 	do
 	{
+
+		// Measure speed
+		double currentTime = glfwGetTime();
+		nbFrames++;
+		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
+												// printf and reset timer
+			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
+			nbFrames = 0;
+			lastTime += 1.0;
+		}
 
 		cam->Update(true);
 		auto projection = cam->GetProjectionMatrix();
@@ -107,29 +120,23 @@ bool Core::Init()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(ProgramID);
 
-		auto toDraw = chunk->mToDraw;
-		for(size_t i = 0; i < toDraw.size(); ++i)
-		{
-			glEnableVertexAttribArray(0);
-			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-			glEnableVertexAttribArray(1);
-			glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		
-			glm::vec3 pos = glm::vec3(toDraw[i].x * 2, toDraw[i].y * 2, toDraw[i].z * 2);
-			Model = glm::translate(pos);
-			glm::mat4 mvp = projection * view * Model;
-			glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+		glm::mat4 mvp = projection * view * Model;
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-			glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+		glDrawElements(GL_TRIANGLES, chunk->mChunkIndices.size(), GL_UNSIGNED_SHORT, 0);
 
-			glDisableVertexAttribArray(0);
-
-
-		}
+		glDisableVertexAttribArray(0);
+		
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
