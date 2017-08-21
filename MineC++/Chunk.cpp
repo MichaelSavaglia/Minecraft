@@ -16,23 +16,30 @@ Chunk::~Chunk()
 
 void Chunk::GenerateCubeData()
 {
-	mCubeData.resize(16);
-	for (size_t i = 0; i < 16; ++i)
-	{
-		mCubeData.at(i).resize(16);
+	auto xMax = 16;
+	auto zMax = 16;
+	auto yMax = 64;
+	auto xMaxIndex = 15;
+	auto zMaxIndex = 15;
+	auto yMaxIndex = 63;
 
-		for (size_t j = 0; j < 16; ++j)
+	mCubeData.resize(xMax);
+	for (size_t i = 0; i < xMax; ++i)
+	{
+		mCubeData.at(i).resize(zMax);
+
+		for (size_t j = 0; j < zMax; ++j)
 		{
-			mCubeData.at(i).at(j).resize(64);
+			mCubeData.at(i).at(j).resize(yMax);
 		}
 	}
-	for (size_t x = 0; x < 16; ++x)
+	for (size_t x = 0; x < xMax; ++x)
 	{
-		for (size_t z = 0; z < 16; ++z)
+		for (size_t z = 0; z < zMax; ++z)
 		{
-			for (size_t y = 0; y < 64; ++y)
+			for (size_t y = 0; y < yMax; ++y)
 			{
-				if (x == 0 || y == 0 || z == 0 || x == 15 || y == 63 || z == 15)
+				if (x == 0 || y == 0 || z == 0 || x == xMaxIndex || y == yMaxIndex || z == zMaxIndex)
 					mCubeData[x][z][y] = new Cube(CubeData::CubeType::AIR);
 				else
 					mCubeData[x][z][y] = new Cube(CubeData::CubeType::DIRT);
@@ -40,20 +47,20 @@ void Chunk::GenerateCubeData()
 		}
 	}
 	int count = 0;
-	for (size_t x = 1; x < 16 - 1; ++x)
+	for (size_t x = 0; x < xMax; ++x)
 	{
-		for (size_t z = 1; z < 16 - 1; ++z)
+		for (size_t z = 0; z < zMax; ++z)
 		{
-			for (size_t y = 1; y < 64 - 1; ++y)
+			for (size_t y = 0; y < yMax; ++y)
 			{
-				if (mCubeData[x][z][y + 1]->GetType() == CubeData::CubeType::AIR ||
-					mCubeData[x][z][y - 1]->GetType() == CubeData::CubeType::AIR ||
-					mCubeData[x][z + 1][y]->GetType() == CubeData::CubeType::AIR ||
-					mCubeData[x][z - 1][y]->GetType() == CubeData::CubeType::AIR ||
-					mCubeData[x + 1][z][y]->GetType() == CubeData::CubeType::AIR ||
-					mCubeData[x - 1][z][y]->GetType() == CubeData::CubeType::AIR)				
+				if ((y != yMaxIndex	&& mCubeData[x][z][y + 1]->GetType() == CubeData::CubeType::AIR) ||
+					(y != 0			&& mCubeData[x][z][y - 1]->GetType() == CubeData::CubeType::AIR) ||
+					(z != zMaxIndex	&& mCubeData[x][z + 1][y]->GetType() == CubeData::CubeType::AIR) ||
+					(z != 0			&& mCubeData[x][z - 1][y]->GetType() == CubeData::CubeType::AIR) ||
+					(x != xMaxIndex	&& mCubeData[x + 1][z][y]->GetType() == CubeData::CubeType::AIR) ||
+					(x != 0			&& mCubeData[x - 1][z][y]->GetType() == CubeData::CubeType::AIR))				
 				{
-					auto pos = glm::vec3(x * 2, y * 2, z * 2);
+					auto pos = glm::vec3(x, y, z);
 					for (size_t i = 0; i < CubeData::mVertices.size(); i += 3)
 					{
 						mChunkMesh.push_back(CubeData::mVertices[i] + pos.x);
