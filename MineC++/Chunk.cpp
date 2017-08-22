@@ -4,6 +4,8 @@
 
 #include <gtc/matrix_transform.hpp>
 #include <gtx\transform.hpp>
+#include <glfw3.h>
+#include <iostream>
 
 Chunk::Chunk()
 {
@@ -47,6 +49,7 @@ void Chunk::GenerateCubeData()
 		}
 	}
 	int count = 0;
+	auto start = glfwGetTime();
 	for (size_t x = 0; x < xMax; ++x)
 	{
 		for (size_t z = 0; z < zMax; ++z)
@@ -69,9 +72,16 @@ void Chunk::GenerateCubeData()
 						mChunkColours.push_back(CubeData::mColors[i]);
 						mChunkColours.push_back(CubeData::mColors[i+1]);
 						mChunkColours.push_back(CubeData::mColors[i+2]);
+
+					}
+					for (size_t i = 0; i < CubeData::mUVs.size(); i += 6)
+					{
 						mChunkUVs.push_back(CubeData::mUVs[i]);
-						mChunkUVs.push_back(CubeData::mUVs[i+1]);
-						mChunkUVs.push_back(CubeData::mUVs[i+2]);
+						mChunkUVs.push_back(CubeData::mUVs[i + 1]);
+						mChunkUVs.push_back(CubeData::mUVs[i + 2]);
+						mChunkUVs.push_back(CubeData::mUVs[i + 3]);
+						mChunkUVs.push_back(CubeData::mUVs[i + 4]);
+						mChunkUVs.push_back(CubeData::mUVs[i + 5]);
 					}
 					for (size_t i = 0; i < CubeData::mIndices.size(); ++i)
 					{
@@ -82,5 +92,7 @@ void Chunk::GenerateCubeData()
 			}
 		}
 	}
+	auto finish = glfwGetTime();
+	std::cout << finish - start << "--------------" << std::endl;
 	int i = 0;
 }
