@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Dependencies\soil\SOIL.h"
 
 struct GLFWwindow;
 class Core
