@@ -1,3 +1,7 @@
-﻿  Chunk.cpp
-  MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.exe
-  MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)
+﻿  Window.cpp
+  Core.cpp
+c:\users\andrew\documents\minec++\minecraft\minec++\core.cpp(156): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Generating Code...
+  LINK : C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.exe not found or not built by the last incremental link; performing full link
+  MineC++.vcxproj -> C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.exe
+  MineC++.vcxproj -> C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)
