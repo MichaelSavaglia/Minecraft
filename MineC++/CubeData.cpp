@@ -27,29 +27,15 @@ const std::vector<GLfloat> CubeData::mColors =
 
 const std::vector<GLfloat> CubeData::mUVs = 
 {
-	//front face
-	0.0, 0.0,  1.0, 0.0,  1.0, 1.0, //first triangle
-	1.0, 1.0,  0.0, 1.0,  0.0, 0.0, //second triangle
+	0.0, 0.0,
+	1.0, 0.0,
+	1.0, 1.0,
+	0.0, 1.0,
+	0.0, 0.0,
+	1.0, 0.0,
+	1.0, 1.0,
+	0.0, 1.0,
 
-	//right face
-	0.0, 0.0,  1.0, 0.0,  1.0, 1.0,
-	1.0, 1.0,  0.0, 1.0,  0.0, 0.0,
-	
-	//back face
-	0.0, 0.0,  1.0, 0.0,  1.0, 1.0,
-	1.0, 1.0,  0.0, 1.0,  0.0, 0.0,
-
-	//left face
-	0.0, 0.0,  1.0, 0.0,  1.0, 1.0,
-	1.0, 1.0,  0.0, 1.0,  0.0, 0.0,
-
-	//bottom face
-	0.0, 0.0,  1.0, 0.0,  1.0, 1.0,
-	1.0, 1.0,  0.0, 1.0,  0.0, 0.0,
-
-	//top face
-	0.0, 0.0,  1.0, 0.0,  1.0, 1.0,
-	1.0, 1.0,  0.0, 1.0,  0.0, 0.0
 };
 
 const std::vector<unsigned short> CubeData::mIndices =

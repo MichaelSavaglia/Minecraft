@@ -69,19 +69,15 @@ void Chunk::GenerateCubeData()
 						mChunkMesh.push_back(CubeData::mVertices[i] + pos.x);
 						mChunkMesh.push_back(CubeData::mVertices[i + 1] + pos.y);
 						mChunkMesh.push_back(CubeData::mVertices[i + 2] + pos.z);
-						mChunkColours.push_back(CubeData::mColors[i]);
-						mChunkColours.push_back(CubeData::mColors[i+1]);
-						mChunkColours.push_back(CubeData::mColors[i+2]);
-
 					}
-					for (size_t i = 0; i < CubeData::mUVs.size(); i += 6)
+					for (size_t i = 0; i < CubeData::mUVs.size(); i += 4)
 					{
 						mChunkUVs.push_back(CubeData::mUVs[i]);
 						mChunkUVs.push_back(CubeData::mUVs[i + 1]);
 						mChunkUVs.push_back(CubeData::mUVs[i + 2]);
 						mChunkUVs.push_back(CubeData::mUVs[i + 3]);
-						mChunkUVs.push_back(CubeData::mUVs[i + 4]);
-						mChunkUVs.push_back(CubeData::mUVs[i + 5]);
+						//mChunkUVs.push_back(CubeData::mUVs[i + 4]);
+						//mChunkUVs.push_back(CubeData::mUVs[i + 5]);
 					}
 					for (size_t i = 0; i < CubeData::mIndices.size(); ++i)
 					{
