@@ -1,3 +1,4 @@
-﻿  Chunk.cpp
+﻿  Core.cpp
+c:\users\andrew\documents\minec++\minecraft\minec++\core.cpp(154): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   MineC++.vcxproj -> C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.exe
   MineC++.vcxproj -> C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)

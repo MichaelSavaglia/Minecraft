@@ -17,6 +17,7 @@ public:
 	inline std::vector<std::vector<std::vector<Cube*>>> GetCubeData() const { return mCubeData; }
 	std::vector<GLfloat> mChunkMesh;
 	std::vector<GLfloat> mChunkColours;
+	std::vector<GLfloat> mChunkUVs;
 	std::vector<unsigned short> mChunkIndices;
 private:
 	std::vector<std::vector<std::vector<Cube*>>> mCubeData;

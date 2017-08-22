@@ -69,6 +69,9 @@ void Chunk::GenerateCubeData()
 						mChunkColours.push_back(CubeData::mColors[i]);
 						mChunkColours.push_back(CubeData::mColors[i+1]);
 						mChunkColours.push_back(CubeData::mColors[i+2]);
+						mChunkUVs.push_back(CubeData::mUVs[i]);
+						mChunkUVs.push_back(CubeData::mUVs[i+1]);
+						mChunkUVs.push_back(CubeData::mUVs[i+2]);
 					}
 					for (size_t i = 0; i < CubeData::mIndices.size(); ++i)
 					{
