@@ -8,6 +8,7 @@
     <ClCompile Include="CubeData.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
@@ -16,6 +17,8 @@
     <ClInclude Include="CubeData.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

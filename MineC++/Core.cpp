@@ -1,10 +1,8 @@
 #include "Core.h"
+
 #include <glm.hpp>
-
-
 #include <vector>
 #include <iostream>
-
 #include <glew.h>
 #include <glfw3.h>
 
@@ -13,6 +11,7 @@
 #include "CubeData.h"
 #include "Chunk.h"
 #include "Cube.h"
+
 Core::Core()
 {
 }
