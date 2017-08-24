@@ -1,3 +1,11 @@
 ﻿  Chunk.cpp
-  MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.exe
-  MineC++.vcxproj -> D:\TN Studios\Minecraft 2.0\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)
+c:\users\andrew\documents\minec++\minecraft\minec++\chunk.cpp(76): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\andrew\documents\minec++\minecraft\minec++\chunk.cpp(78): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
+  Window.cpp
+  ShaderLoader.cpp
+  Camera.cpp
+  MineC++.vcxproj -> C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.exe
+  MineC++.vcxproj -> C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)
