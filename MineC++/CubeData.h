@@ -10,7 +10,7 @@ struct CubeData
 	static const std::vector<GLfloat>			mUVs;
 	static const std::vector<unsigned short>	mIndices;
 
-	const enum class CubeType : Types::uint8
+	const enum class CubeType : uint8
 	{
 		DIRT = 0,
 		AIR,

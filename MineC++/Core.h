@@ -3,12 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Dependencies\soil\SOIL.h"
+#include "Window.h"
 
-struct GLFWwindow;
 class Core
 {
 public:
-	Core();
+	Core(Window* window);
 	~Core();
 
 	bool Init();
@@ -21,7 +21,6 @@ public:
 
 
 private:
-
-	GLFWwindow* window;
+	Window* _window;
 };
 
