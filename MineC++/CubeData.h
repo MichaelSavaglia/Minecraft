@@ -9,7 +9,7 @@ struct CubeData
 	static const std::vector<GLfloat>			mColors;
 	static const std::vector<GLfloat>			mUVs;
 	static const std::vector<unsigned short>	mIndices;
-
+	 
 	const enum class CubeType : int// Types::uint8
 	{
 		AIR = 0,

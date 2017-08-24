@@ -13,8 +13,9 @@
 #include "Chunk.h"
 #include "Cube.h"
 
-Core::Core()
+Core::Core(Window* window) : _window(window)
 {
+
 }
 
 
@@ -24,43 +25,6 @@ Core::~Core()
 
 bool Core::Init()
 {
-	if (!glfwInit())
-	{
-		std::cout << "Failed to initialise GLFW" << std::endl;
-		return false;
-	}
-	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	
-
-
-
-	GLFWwindow* window;
-	window = glfwCreateWindow(1280, 720, "MineC++", NULL, NULL);
-
-	if (window == NULL)
-	{
-		std::cout << "Failed to open GLFW Window" << std::endl;
-
-		glfwTerminate();
-
-		return false;
-	}
-
-	glfwMakeContextCurrent(window);
-	glewExperimental = true;
-
-	if (glewInit() != GLEW_OK)
-	{
-		std::cout << "Failed to initialise GLEW" << std::endl;
-		return false;
-	}
-
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	Chunk* chunk = new Chunk();
 	chunk->GenerateCubeData();
@@ -98,7 +62,9 @@ bool Core::Init()
 
 	GLuint MatrixID = glGetUniformLocation(ProgramID, "MVP");
 
-	Camera* cam = new Camera(window);
+	Camera* cam = new Camera(_window->GetGLFWWindow());
+	
+	GLuint textureID;
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -162,10 +128,10 @@ bool Core::Init()
 		glDisableVertexAttribArray(1);
 
 
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(_window->GetGLFWWindow());
 		glfwPollEvents();
-	} while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-		glfwWindowShouldClose(window) == 0);
+	} while (glfwGetKey(_window->GetGLFWWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+		glfwWindowShouldClose(_window->GetGLFWWindow()) == 0);
 
 	return true;
 }

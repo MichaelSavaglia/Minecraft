@@ -9,6 +9,7 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
@@ -19,6 +20,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Input.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />
