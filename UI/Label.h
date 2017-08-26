@@ -10,6 +10,7 @@ public:
 	inline void ChangePosition(int x, int y) { mX = x; mY = y; SetBuffers(); };
 	inline void ChangeSize(int size) { mSize = size; SetBuffers(); };
 	inline void ChangeText(char* text) { mText = text; SetBuffers(); };
+	inline void ChangeText(const char* text) { mText = const_cast<char*>(text); SetBuffers(); };
 
 private:
 	char* mText;

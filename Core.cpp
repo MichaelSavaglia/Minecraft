@@ -31,8 +31,6 @@ Core::~Core()
 
 bool Core::Init()
 {
-
-
 	std::vector<GLint> posData;
 	for (size_t x = 0; x < 4; ++x)
 	{
@@ -108,7 +106,7 @@ bool Core::Init()
 		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
 												// printf and reset timer
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
-			//fps->ChangeText();
+			fps->ChangeText("FPS");
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
