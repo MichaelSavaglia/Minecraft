@@ -14,6 +14,7 @@
     <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\iUIElement.cpp" />
     <ClCompile Include="UI\Label.cpp" />
+    <ClCompile Include="Chunk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -29,6 +30,7 @@
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\iUIElement.h" />
     <ClInclude Include="UI\Label.h" />
+    <ClInclude Include="Chunk.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

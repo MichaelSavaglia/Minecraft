@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "CubeData.h"
 #include "Cube.h"
+#include "Chunk.h"
 #include "Section.h"
 //#include "Input.h"
 
@@ -31,18 +32,17 @@ Core::~Core()
 bool Core::Init()
 {
 
-	std::vector<GLfloat> posData;
-	for (size_t i = 0; i < 16; ++i)
-	{
-		Section* testSect = new Section(i);
-		auto data = testSect->GenPosData();
-		posData.insert(posData.end(), data.begin(), data.end());
-	}
 
-	static const GLfloat arr[] = 
+	std::vector<GLfloat> posData;
+	for (size_t x = 0; x < 4; ++x)
 	{
-		0.0f,1.0f,2.0f,3.0f,4.0f,5.0f,6.0f,7.0f,8.0f,9.0f,10.0f,11.0f,12.0f,13.0f,14.0f,15.0f
-	};
+		for (size_t z = 0; z < 4; ++z)
+		{
+			Chunk* chunk = new Chunk(x, z);
+			auto data = chunk->GetChunkCubePosList();
+			posData.insert(posData.end(), data.begin(), data.end());
+		}
+	}
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
@@ -59,12 +59,6 @@ bool Core::Init()
 	glGenBuffers(1, &cubeBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
 	glBufferData(GL_ARRAY_BUFFER, CubeData::mVertices.size() * sizeof(GLfloat), &CubeData::mVertices[0], GL_STATIC_DRAW);
-
-	GLuint yBuffer;
-	glGenBuffers(1, &yBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, yBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(arr), arr, GL_STATIC_DRAW);
-
 
 	GLuint indexBuffer;
 	glGenBuffers(1, &indexBuffer);
@@ -145,28 +139,22 @@ bool Core::Init()
 		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(2);
-		glBindBuffer(GL_ARRAY_BUFFER, yBuffer);
-		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
 		glVertexAttribDivisor(1, 1);
-		glVertexAttribDivisor(2, 4096);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
 		//glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
-		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, 4096 * 16);
+		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, posData.size() / 3);
 
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
 		glVertexAttribDivisor(1, 0);
-		glVertexAttribDivisor(2, 0);
 
 		glDisable(GL_DEPTH_TEST);
 		canvas->Draw();
