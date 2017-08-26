@@ -1,3 +1,14 @@
-﻿  Window.cpp
+﻿  main.cpp
+  Window.cpp
+h:\minecraft\minec++\window.cpp(52): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+h:\minecraft\minec++\window.cpp(53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+h:\minecraft\minec++\window.cpp(58): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+h:\minecraft\minec++\window.cpp(59): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Input.cpp
+  Core.cpp
+h:\minecraft\minec++\core.cpp(126): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Camera.cpp
   MineC++.vcxproj -> H:\Minecraft\MineC++\x64\Debug\MineC++.exe
   MineC++.vcxproj -> H:\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)

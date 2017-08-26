@@ -12,6 +12,7 @@
 #include "CubeData.h"
 #include "Chunk.h"
 #include "Cube.h"
+#include "Input.h"
 
 Core::Core(Window* window) : _window(window)
 {
@@ -82,7 +83,6 @@ bool Core::Init()
 	int nbFrames = 0;
 	do
 	{
-
 		// Measure speed
 		double currentTime = glfwGetTime();
 		nbFrames++;
@@ -91,6 +91,11 @@ bool Core::Init()
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
 			nbFrames = 0;
 			lastTime += 1.0;
+		}
+
+		if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
+		{
+			printf("Key Pressed \n");
 		}
 
 		cam->Update(true);

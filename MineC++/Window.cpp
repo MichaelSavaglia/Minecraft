@@ -49,14 +49,14 @@ void Window::UpdateMouseButtonState(int button, int action, int mods)
 
 void Window::UpdateMousePosition(double xpos, double ypos)
 {
-	_input->_mouseX = xpos;
-	_input->_mouseY = ypos;
+	_input->_mousePosition.x = xpos;
+	_input->_mousePosition.y = ypos;
 }
 
 void Window::UpdateMouseScroll(double xoffset, double yoffset)
 {
-	_input->_mouseWheelX = xoffset;
-	_input->_mouseWheelY = yoffset;
+	_input->_mouseWheel.x = xoffset;
+	_input->_mouseWheel.y = yoffset;
 }
 
 void Window::SetWindowTitle(StringPtr title)
@@ -68,7 +68,6 @@ void Window::SetCursorPosition(double posX, double posY)
 {
 	glfwSetCursorPos(_window, posX, posY);
 }
-
 
 void CallbackClosed(GLFWwindow * glfwWindow)
 {
