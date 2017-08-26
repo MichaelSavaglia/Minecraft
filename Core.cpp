@@ -158,7 +158,7 @@ bool Core::Init()
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
 
-		canvas->Draw("Fuck Mike #';'][1224515!%%^", 10, 500, 36);
+		canvas->Draw("Fucking Hell Mike", 10, 500, 36);
 
 
 		glfwSwapBuffers(_window->GetGLFWWindow());

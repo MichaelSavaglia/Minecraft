@@ -9,7 +9,7 @@ public:
 	~Canvas();
 
 	void Draw(const char* text, int x, int y, int size);
-
+	void printText2D(const char * text, int x, int y, int size);
 private:
 	std::vector<GLfloat> mCanvas;
 
