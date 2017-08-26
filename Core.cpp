@@ -157,6 +157,8 @@ bool Core::Init()
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
+		glVertexAttribDivisor(1, 0);
+		glVertexAttribDivisor(2, 0);
 
 		glDisable(GL_DEPTH_TEST);
 		canvas->Draw("Fucking Hell Mike", 10, 500, 36);
