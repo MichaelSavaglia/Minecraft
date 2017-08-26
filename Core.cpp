@@ -15,7 +15,9 @@
 #include "Section.h"
 //#include "Input.h"
 
-#include "Canvas.h"
+#include "UI/Canvas.h"
+#include "UI/Label.h"
+#include <string>
 
 Core::Core(Window* window) : _window(window)
 {
@@ -88,7 +90,12 @@ bool Core::Init()
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	);
 	
+	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
+	Label* label = new Label("Mike sucks dick", 0, 0, 16);
+
 	Canvas* canvas = new Canvas();
+	canvas->AddElement(fps);
+	canvas->AddElement(label);
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
@@ -100,6 +107,7 @@ bool Core::Init()
 		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
 												// printf and reset timer
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
+			//fps->ChangeText();
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
@@ -149,7 +157,7 @@ bool Core::Init()
 		glVertexAttribDivisor(1, 0);
 
 		glDisable(GL_DEPTH_TEST);
-		canvas->Draw("Fucking Hell Mike", 10, 500, 36);
+		canvas->Draw();
 
 
 		glfwSwapBuffers(_window->GetGLFWWindow());
