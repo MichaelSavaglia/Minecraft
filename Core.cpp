@@ -10,12 +10,13 @@
 #include "Shaders/ShaderLoader.h"
 #include "Camera.h"
 #include "CubeData.h"
-#include "Chunk.h"
 #include "Cube.h"
 #include "Section.h"
+//#include "Input.h"
 
-Core::Core()
+Core::Core(Window* window) : _window(window)
 {
+
 }
 
 
@@ -25,43 +26,6 @@ Core::~Core()
 
 bool Core::Init()
 {
-	if (!glfwInit())
-	{
-		std::cout << "Failed to initialise GLFW" << std::endl;
-		return false;
-	}
-	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	
-
-
-
-	GLFWwindow* window;
-	window = glfwCreateWindow(1280, 720, "MineC++", NULL, NULL);
-
-	if (window == NULL)
-	{
-		std::cout << "Failed to open GLFW Window" << std::endl;
-
-		glfwTerminate();
-
-		return false;
-	}
-
-	glfwMakeContextCurrent(window);
-	glewExperimental = true;
-
-	if (glewInit() != GLEW_OK)
-	{
-		std::cout << "Failed to initialise GLEW" << std::endl;
-		return false;
-	}
-
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	auto start = glfwGetTime();
 	Section* testSect = new Section(0);
@@ -102,6 +66,10 @@ bool Core::Init()
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0], GL_STATIC_DRAW);
+	//GLuint indexBuffer;
+	//glGenBuffers(1, &indexBuffer);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, /*chunk->mChunkIndices*/CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0]/*chunk->mChunkIndices[0]*/, GL_STATIC_DRAW);
 
 
 	GLuint ProgramID;
@@ -111,13 +79,9 @@ bool Core::Init()
 
 	GLuint MatrixID = glGetUniformLocation(ProgramID, "MVP");
 
-	Camera* cam = new Camera(window);
+	Camera* cam = new Camera(_window->GetGLFWWindow());
 	
-	GLuint textureID;// = SOIL_load_OGL_texture("Textures/dirt.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-
-	glGenTextures(1, &textureID);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	GLuint textureID;
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -126,13 +90,18 @@ bool Core::Init()
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 		SOIL_free_image_data(image);
 	GLuint TextureSampler = glGetUniformLocation(ProgramID, "myTextureSampler");
+	GLuint textureSheet = SOIL_load_OGL_texture(
+		"Textures/texturesheet.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
 	
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
 	do
 	{
-
 		// Measure speed
 		double currentTime = glfwGetTime();
 		nbFrames++;
@@ -143,6 +112,11 @@ bool Core::Init()
 			lastTime += 1.0;
 		}
 
+		//if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
+		//{
+		//	printf("Key Pressed \n");
+		//}
+
 		cam->Update(true);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
@@ -150,11 +124,13 @@ bool Core::Init()
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 
+		glClearColor(0.0, 0.0, 0.0, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(ProgramID);
 
-		glBindTexture(GL_TEXTURE_2D, textureID);
-		glUniform1i(TextureSampler, 0);
+	/*	glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureSheet);
+		glUniform1i(TextureSampler, 0);*/
 
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
@@ -169,19 +145,20 @@ bool Core::Init()
 
 		glVertexAttribDivisor(1, 1);
 
-
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
 		//glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
 		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, 4096);
-		//glDisableVertexAttribArray(0);
-		//glDisableVertexAttribArray(1);
-		
 
-		glfwSwapBuffers(window);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+
+
+		glfwSwapBuffers(_window->GetGLFWWindow());
 		glfwPollEvents();
-	} while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-		glfwWindowShouldClose(window) == 0);
+	} while (glfwGetKey(_window->GetGLFWWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+		glfwWindowShouldClose(_window->GetGLFWWindow()) == 0);
 
 	return true;
 }

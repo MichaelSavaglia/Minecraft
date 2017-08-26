@@ -4,3 +4,4 @@
 *.ipch
 *.pdb
 *.idb
+* x64/

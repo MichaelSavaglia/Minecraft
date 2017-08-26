@@ -2,7 +2,7 @@
 #include <glfw3.h>
 #include <iostream>
 
-Section::Section(Types::uint8 yPos) : mYPos(yPos)
+Section::Section(uint8 yPos) : mYPos(yPos)
 {
 	for (size_t i = 0; i < 4096; ++i)
 	{

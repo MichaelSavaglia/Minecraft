@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Core.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Shaders\ShaderLoader.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CubeData.cpp" />
-    <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="Core.cpp" />
     <ClCompile Include="Cube.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="CubeData.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Section.cpp" />
+    <ClCompile Include="Shaders\ShaderLoader.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core.h" />
-    <ClInclude Include="Shaders\ShaderLoader.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CubeData.h" />
-    <ClInclude Include="Chunk.h" />
+    <ClInclude Include="Core.h" />
     <ClInclude Include="Cube.h" />
-    <ClInclude Include="Window.h" />
-    <ClInclude Include="Types.h" />
+    <ClInclude Include="CubeData.h" />
     <ClInclude Include="Section.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Shaders\ShaderLoader.h" />
+    <ClInclude Include="Types.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />
