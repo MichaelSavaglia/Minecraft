@@ -131,7 +131,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="UI\Label.cpp" />
+    <ClCompile Include="UI\iUIElement.cpp" />
+    <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CubeData.cpp" />
@@ -150,7 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Canvas.h" />
+    <ClInclude Include="UI\Label.h" />
+    <ClInclude Include="UI\iUIElement.h" />
+    <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="CubeData.h" />

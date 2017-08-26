@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <glew.h>
+#include "iUIElement.h"
 
 class Canvas
 {
@@ -8,14 +9,14 @@ public:
 	Canvas();
 	~Canvas();
 
-	void Draw(const char* text, int x, int y, int size);
+	void AddElement(iUIElement* ele, GLuint layer = 0);
+
+	void Draw();
 private:
-	std::vector<GLfloat> mCanvas;
+	std::vector<std::vector<iUIElement*>> mCanvasElements;
 
 	GLuint mShader;
-	GLuint mVertexBuffer;
-	GLuint mUVBuffer;
 	GLuint mUniformLocation;
-	GLuint mTexture;
+	
 };
 
