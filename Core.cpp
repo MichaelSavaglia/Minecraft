@@ -30,7 +30,7 @@ bool Core::Init()
 	auto start = glfwGetTime();
 	Section* testSect = new Section(0);
 	auto posData = testSect->GenPosData();
-	for (size_t i = 0; i < 1000; ++i)
+	for (size_t i = 0; i < 1; ++i)
 	{
 		testSect->GenPosData();
 	}
@@ -41,6 +41,7 @@ bool Core::Init()
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	GLuint posBuffer;
 	glGenBuffers(1, &posBuffer);
@@ -120,7 +121,7 @@ bool Core::Init()
 		cam->Update(true);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
-		glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 
