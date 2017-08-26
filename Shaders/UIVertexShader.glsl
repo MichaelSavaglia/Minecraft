@@ -1,7 +1,7 @@
 #version 450 core
 
-layout(location = 3) in vec2 vertPos;
-layout(location = 4) in vec2 vertUV;
+layout(location = 0) in vec2 vertPos;
+layout(location = 1) in vec2 vertUV;
 
 out vec2 UV;
 
