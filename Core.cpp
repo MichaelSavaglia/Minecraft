@@ -14,6 +14,8 @@
 #include "Section.h"
 //#include "Input.h"
 
+#include "Canvas.h"
+
 Core::Core(Window* window) : _window(window)
 {
 
@@ -44,7 +46,7 @@ bool Core::Init()
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	GLuint posBuffer;
 	glGenBuffers(1, &posBuffer);
@@ -92,6 +94,7 @@ bool Core::Init()
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	);
 	
+	Canvas* canvas = new Canvas();
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
@@ -153,6 +156,9 @@ bool Core::Init()
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
+
+		canvas->Draw("Fuck Mike #';'][1224515!%%^", 10, 500, 36);
 
 
 		glfwSwapBuffers(_window->GetGLFWWindow());
