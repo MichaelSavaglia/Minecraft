@@ -12,6 +12,8 @@ public:
 
 	inline std::vector<GLfloat> const GetChunkCubePosList() { return mPosList; }
 
+	void Draw();
+
 private:
 
 	Section* mSections[16];

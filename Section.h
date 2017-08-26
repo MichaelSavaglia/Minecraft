@@ -12,11 +12,11 @@ public:
 
 	inline uint8 GetYPos()		const {return mYPos;}
 
-	inline std::vector<GLfloat> const GetPosList() { return mPosList; }
+	inline std::vector<GLint> const GetPosList() { return mPosList; }
 
 private:
 	CubeData::CubeType mBlockIDs[4096];
-	std::vector<GLfloat> mPosList;
+	std::vector<GLint> mPosList;
 	unsigned short mYPos;
 };
 

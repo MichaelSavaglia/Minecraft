@@ -22,9 +22,9 @@ void Section::GenPosList(int x, int z)
 	mPosList.reserve(4096 * 3);
 	for (size_t i = 0; i < 4096; ++i)
 	{
-		mPosList.push_back((i & 0xF) + (x * 16));
-		mPosList.push_back(((i >> 4) & 0xF) + (mYPos * 16));
-		mPosList.push_back(((i >> 8) & 0xF) + (z * 16));
+		mPosList.push_back((i & 0xF) + (x << 4));
+		mPosList.push_back(((i >> 4) & 0xF) + (mYPos << 4));
+		mPosList.push_back(((i >> 8) & 0xF) + (z << 4));
 	}
 	mPosList.shrink_to_fit();
 }
