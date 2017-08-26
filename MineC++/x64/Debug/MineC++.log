@@ -1,14 +1,12 @@
-﻿  main.cpp
-  Window.cpp
-h:\minecraft\minec++\window.cpp(52): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\minecraft\minec++\window.cpp(53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\minecraft\minec++\window.cpp(58): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\minecraft\minec++\window.cpp(59): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Input.cpp
+﻿  CubeData.cpp
+  Cube.cpp
   Core.cpp
-h:\minecraft\minec++\core.cpp(126): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+c:\users\andrew\documents\minec++\minecraft\minec++\core.cpp(125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+c:\users\andrew\documents\minec++\minecraft\minec++\core.cpp(67): warning C4101: 'textureID': unreferenced local variable
+  Chunk.cpp
+c:\users\andrew\documents\minec++\minecraft\minec++\chunk.cpp(76): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\andrew\documents\minec++\minecraft\minec++\chunk.cpp(78): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating Code...
-  Skipping... (no relevant changes detected)
-  Camera.cpp
-  MineC++.vcxproj -> H:\Minecraft\MineC++\x64\Debug\MineC++.exe
-  MineC++.vcxproj -> H:\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)
+  LINK : C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.exe not found or not built by the last incremental link; performing full link
+  MineC++.vcxproj -> C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.exe
+  MineC++.vcxproj -> C:\Users\Andrew\Documents\MineC++\Minecraft\MineC++\x64\Debug\MineC++.pdb (Partial PDB)

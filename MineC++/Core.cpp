@@ -50,10 +50,10 @@ bool Core::Init()
 	glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
 	glBufferData(GL_ARRAY_BUFFER, chunk->mChunkUVs.size() * sizeof(GLfloat), &chunk->mChunkUVs[0], GL_STATIC_DRAW);
 
-	GLuint indexBuffer;
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, chunk->mChunkIndices.size() * sizeof(unsigned short), &chunk->mChunkIndices[0], GL_STATIC_DRAW);
+	//GLuint indexBuffer;
+	//glGenBuffers(1, &indexBuffer);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, /*chunk->mChunkIndices*/CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0]/*chunk->mChunkIndices[0]*/, GL_STATIC_DRAW);
 
 
 	GLuint ProgramID;
@@ -65,11 +65,7 @@ bool Core::Init()
 
 	Camera* cam = new Camera(_window->GetGLFWWindow());
 	
-	GLuint textureID;// = SOIL_load_OGL_texture("Textures/dirt.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-
-	glGenTextures(1, &textureID);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	GLuint textureID;
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -78,6 +74,12 @@ bool Core::Init()
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 		SOIL_free_image_data(image);
 	GLuint TextureSampler = glGetUniformLocation(ProgramID, "myTextureSampler");
+	GLuint textureSheet = SOIL_load_OGL_texture(
+		"Textures/texturesheet.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
 	
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
@@ -105,10 +107,12 @@ bool Core::Init()
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 
+		glClearColor(0.0, 0.0, 0.0, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(ProgramID);
 
-		glBindTexture(GL_TEXTURE_2D, textureID);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureSheet);
 		glUniform1i(TextureSampler, 0);
 
 		glEnableVertexAttribArray(0);
@@ -122,11 +126,12 @@ bool Core::Init()
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glDrawElements(GL_TRIANGLES, chunk->mChunkIndices.size(), GL_UNSIGNED_SHORT, 0);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+		glDrawArrays(GL_TRIANGLES, 0, chunk->mChunkMesh.size());// , GL_UNSIGNED_SHORT, 0);
 
 		glDisableVertexAttribArray(0);
-		
+		glDisableVertexAttribArray(1);
+
 
 		glfwSwapBuffers(_window->GetGLFWWindow());
 		glfwPollEvents();
