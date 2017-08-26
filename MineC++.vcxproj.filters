@@ -12,6 +12,7 @@
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
     <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="Chunk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -25,6 +26,7 @@
     <ClInclude Include="Window.h" />
     <ClInclude Include="TextureAtlas.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Chunk.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

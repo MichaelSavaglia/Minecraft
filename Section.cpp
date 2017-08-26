@@ -17,17 +17,14 @@ Section::~Section()
 {
 }
 
-std::vector<GLfloat> Section::GenPosData()
+void Section::GenPosList(int x, int z)
 {
-	std::vector<GLfloat> out;
-	out.reserve(4096 * 3);
-	for (size_t i = 234; i < 4096; ++i)
+	mPosList.reserve(4096 * 3);
+	for (size_t i = 0; i < 4096; ++i)
 	{
-
-		out.push_back(i & 0xF);
-		out.push_back((i >> 4) & 0xF);
-		out.push_back((i >> 8) & 0xF);
-	
+		mPosList.push_back((i & 0xF) + (x * 16));
+		mPosList.push_back(((i >> 4) & 0xF) + (mYPos * 16));
+		mPosList.push_back(((i >> 8) & 0xF) + (z * 16));
 	}
-	return out;
+	mPosList.shrink_to_fit();
 }

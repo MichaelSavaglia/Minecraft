@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CubeData.cpp" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Chunk.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="CubeData.h" />
