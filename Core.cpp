@@ -27,15 +27,18 @@ Core::~Core()
 bool Core::Init()
 {
 
-	auto start = glfwGetTime();
-	Section* testSect = new Section(0);
-	auto posData = testSect->GenPosData();
-	for (size_t i = 0; i < 1000; ++i)
+	std::vector<GLfloat> posData;
+	for (size_t i = 0; i < 16; ++i)
 	{
-		testSect->GenPosData();
+		Section* testSect = new Section(i);
+		auto data = testSect->GenPosData();
+		posData.insert(posData.end(), data.begin(), data.end());
 	}
-	auto end = glfwGetTime();
-	std::cout << (end - start) / 1000 << std::endl;
+
+	static const GLfloat arr[] = 
+	{
+		0.0f,1.0f,2.0f,3.0f,4.0f,5.0f,6.0f,7.0f,8.0f,9.0f,10.0f,11.0f,12.0f,13.0f,14.0f,15.0f
+	};
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
@@ -52,26 +55,17 @@ bool Core::Init()
 	glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
 	glBufferData(GL_ARRAY_BUFFER, CubeData::mVertices.size() * sizeof(GLfloat), &CubeData::mVertices[0], GL_STATIC_DRAW);
 
-	/*GLuint colorBuffer;
-	glGenBuffers(1, &colorBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-	glBufferData(GL_ARRAY_BUFFER, chunk->mChunkColours.size() * sizeof(GLfloat), &chunk->mChunkColours[0], GL_STATIC_DRAW);*/
+	GLuint yBuffer;
+	glGenBuffers(1, &yBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, yBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(arr), arr, GL_STATIC_DRAW);
 
-	//GLuint uvBuffer;
-	//glGenBuffers(1, &uvBuffer);
-	//glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-	//glBufferData(GL_ARRAY_BUFFER, chunk->mChunkUVs.size() * sizeof(GLfloat), &chunk->mChunkUVs[0], GL_STATIC_DRAW);
 
 	GLuint indexBuffer;
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0], GL_STATIC_DRAW);
-	//GLuint indexBuffer;
-	//glGenBuffers(1, &indexBuffer);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, /*chunk->mChunkIndices*/CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0]/*chunk->mChunkIndices[0]*/, GL_STATIC_DRAW);
-
-
+	
 	GLuint ProgramID;
 	ProgramID = ShaderUtil::LoadShaders("Shaders/VertexShader.glsl", "Shaders/FragmentShader.glsl");
 
@@ -139,16 +133,21 @@ bool Core::Init()
 		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+		glEnableVertexAttribArray(2);
+		glBindBuffer(GL_ARRAY_BUFFER, yBuffer);
+		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
 		glVertexAttribDivisor(1, 1);
+		glVertexAttribDivisor(2, 4096);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
 		//glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
-		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, 4096);
+		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, 4096 * 16);
 
 
 		glDisableVertexAttribArray(0);

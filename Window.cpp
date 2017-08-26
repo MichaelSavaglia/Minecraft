@@ -27,6 +27,7 @@ Window::Window(StringPtr title, uint16 windowWidth, uint16 windowHeight)
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+	//glfwSwapInterval(0);
 	_input = Input::Instance();
 	_input->RegisterWindow(this);
 
