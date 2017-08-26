@@ -96,10 +96,12 @@ bool Core::Init()
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	);
 	
-	Label* fps = new Label("Not being updated", 0, 685, 35);
+	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
+	Label* label = new Label("Mike sucks dick", 0, 0, 16);
 
 	Canvas* canvas = new Canvas();
 	canvas->AddElement(fps);
+	canvas->AddElement(label);
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;

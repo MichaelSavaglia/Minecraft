@@ -45,7 +45,7 @@ void Label::SetBuffers()
 
 	using glm::vec2;
 
-	GLuint length = mText.length();
+	GLuint length = strlen(mText);
 
 	for (unsigned int i = 0; i < length; ++i)
 	{
