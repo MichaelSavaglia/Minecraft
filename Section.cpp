@@ -1,6 +1,8 @@
 #include "Section.h"
 #include <glfw3.h>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 Section::Section(uint8 yPos) : mYPos(yPos)
 {
@@ -23,7 +25,7 @@ std::vector<GLfloat> Section::GenPosData()
 	{
 		out.push_back(i & 0xF);
 		out.push_back((i >> 4) & 0xF);
-		out.push_back((i >> 8) & 0xF);
+		out.push_back((i >> 8) & 0xF );
 	}
 	return out;
 }
