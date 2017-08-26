@@ -31,16 +31,17 @@ bool Core::Init()
 {
 
 
-	std::vector<GLfloat> posData;
+	std::vector<GLint> posData;
 	for (size_t x = 0; x < 4; ++x)
 	{
 		for (size_t z = 0; z < 4; ++z)
 		{
 			Chunk* chunk = new Chunk(x, z);
 			auto data = chunk->GetChunkCubePosList();
-			posData.insert(posData.end(), data.begin(), data.end());
+			posData.insert(posData.end(), data.begin(), data.end()); // TEMPORARY AS WE OBVIOUSLY DONT WANT TO STORE THIS DATA TWICE
 		}
 	}
+	posData.shrink_to_fit();
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
@@ -51,7 +52,7 @@ bool Core::Init()
 	GLuint posBuffer;
 	glGenBuffers(1, &posBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
-	glBufferData(GL_ARRAY_BUFFER, posData.size() * sizeof(GLfloat), &posData[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, posData.size() * sizeof(GLint), &posData[0], GL_STATIC_DRAW);
 
 	GLuint cubeBuffer;
 	glGenBuffers(1, &cubeBuffer);
@@ -112,7 +113,7 @@ bool Core::Init()
 		cam->Update(true);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 
@@ -130,7 +131,7 @@ bool Core::Init()
 
 		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribIPointer(1, 3, GL_INT, 0, (void*)0);
 		
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
@@ -139,13 +140,11 @@ bool Core::Init()
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-		//glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
 		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, posData.size() / 3);
 
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
 		glVertexAttribDivisor(1, 0);
 
 		glDisable(GL_DEPTH_TEST);

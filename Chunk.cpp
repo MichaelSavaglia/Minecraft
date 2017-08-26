@@ -11,6 +11,10 @@ Chunk::~Chunk()
 	delete[] mSections;
 }
 
+void Chunk::Draw()
+{
+}
+
 void Chunk::GenerateSections()
 {
 	for (size_t i = 0; i < 16; ++i)
