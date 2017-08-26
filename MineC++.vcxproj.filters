@@ -11,7 +11,9 @@
     <ClCompile Include="Shaders\ShaderLoader.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
-    <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="UI\Canvas.cpp" />
+    <ClCompile Include="UI\iUIElement.cpp" />
+    <ClCompile Include="UI\Label.cpp" />
     <ClCompile Include="Chunk.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -25,7 +27,9 @@
     <ClInclude Include="Types.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="TextureAtlas.h" />
-    <ClInclude Include="Canvas.h" />
+    <ClInclude Include="UI\Canvas.h" />
+    <ClInclude Include="UI\iUIElement.h" />
+    <ClInclude Include="UI\Label.h" />
     <ClInclude Include="Chunk.h" />
   </ItemGroup>
   <ItemGroup>
