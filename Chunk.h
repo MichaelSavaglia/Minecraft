@@ -21,6 +21,8 @@ private:
 	int mXPos;
 	int mZPos;
 
+	int mHeightMap[16][16];
 	void GenerateSections();
 	void GeneratePosList();
+	void GenerateHeightMap();
 };
