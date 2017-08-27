@@ -13,7 +13,7 @@ Label::Label(char* text, int x, int y, int size)
 	mSize = size;
 
 	mTexture = SOIL_load_OGL_texture(
-		"Textures/Fonts/Arial56(64x64).png",
+		"Textures/Fonts/Consolas128(2048x2048).tga",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
@@ -63,7 +63,7 @@ void Label::SetBuffers()
 		vertices.push_back(vertexBotLeft);
 
 		char character = mText[i];
-		float uv_x = (character % 16) / 16.0f;
+		float uv_x = (character & 0xF) / 16.0f;
 		float uv_y = (character >> 4) / 16.0f;
 
 		vec2 uvTopLeft = vec2(uv_x, 1.0f - uv_y);
