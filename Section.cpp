@@ -17,14 +17,24 @@ Section::~Section()
 {
 }
 
-void Section::GenPosList(int x, int z)
+void Section::GenPosList(int x, int z, int heightMap[16][16])
 {
 	mPosList.reserve(4096 * 3);
 	for (size_t i = 0; i < 4096; ++i)
 	{
-		mPosList.push_back((i & 0xF) + (x << 4));
-		mPosList.push_back(((i >> 4) & 0xF) + (mYPos << 4));
-		mPosList.push_back(((i >> 8) & 0xF) + (z << 4));
+		int localX = (i & 0xF);
+		int xPos = localX + (x << 4);
+		int localY = ((i >> 4) & 0xF);
+		int yPos = localY + (mYPos << 4);
+		int localZ = ((i >> 8) & 0xF);
+		int zPos = localZ + (z << 4);
+		int maxY = heightMap[localX][localZ];
+		if (yPos <= maxY)
+		{
+			mPosList.push_back(xPos);
+			mPosList.push_back(yPos);
+			mPosList.push_back(zPos);
+		}
 	}
 	mPosList.shrink_to_fit();
 }

@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="HeightGenerator.cpp" />
     <ClCompile Include="UI\Label.cpp" />
     <ClCompile Include="UI\iUIElement.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Chunk.h" />
+    <ClInclude Include="HeightGenerator.h" />
     <ClInclude Include="UI\Label.h" />
     <ClInclude Include="UI\iUIElement.h" />
     <ClInclude Include="UI\Canvas.h" />
