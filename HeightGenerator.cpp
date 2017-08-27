@@ -18,10 +18,10 @@ int HeightGenerator::GenerateHeight(int x, int z)
 
 double HeightGenerator::GetNoise(double x, double z)
 {
-	std::random_device rd;     // only used once to initialise (seed) engine
-	std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
+	std::random_device rd; 
+	std::mt19937 rng(rd());
 	rng.seed(x * 1234 + z * 4321 + mSeed);
-	std::uniform_real_distribution<double> uni(0, 32); // guaranteed unbiased
+	std::uniform_real_distribution<double> uni(0, 32);
 
 	return uni(rng);
 }
