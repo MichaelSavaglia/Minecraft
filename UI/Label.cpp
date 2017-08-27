@@ -5,12 +5,10 @@
 #include <vector>
 
 
-Label::Label(char* text, int x, int y, int size)
+
+Label::Label(char* text, int x, int y, int size) : iUIElement(x, y, size, size)
 {
 	mText = text;
-	mX = x;
-	mY = y;
-	mSize = size;
 
 	mTexture = SOIL_load_OGL_texture(
 		"Textures/Fonts/Consolas128(2048x2048).tga",
@@ -18,11 +16,18 @@ Label::Label(char* text, int x, int y, int size)
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
 	);
+}
 
-	glGenBuffers(1, &mVertexBuffer);
-	glGenBuffers(1, &mUVBuffer);
+Label::Label(std::string text, int x, int y, int size) : iUIElement(x, y, size, size)
+{
+	mText = text;
 
-	SetBuffers();
+	mTexture = SOIL_load_OGL_texture(
+		"Textures/Fonts/Consolas128(2048x2048).tga",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
+	);
 }
 
 
@@ -35,6 +40,12 @@ Label::~Label()
 
 void Label::Draw()
 {
+	if (mBufferNeedsUpdate)
+	{
+		SetBuffers();
+		mBufferNeedsUpdate = false;
+	}
+
 	iUIElement::Draw();
 }
 
@@ -45,14 +56,14 @@ void Label::SetBuffers()
 
 	using glm::vec2;
 
-	GLuint length = strlen(mText);
+	GLuint length = mText.length();
 
 	for (unsigned int i = 0; i < length; ++i)
 	{
-		vec2 vertexTopLeft = vec2(mX + i*mSize, mY + mSize);
-		vec2 vertexTopRight = vec2(mX + i*mSize + mSize, mY + mSize);
-		vec2 vertexBotRight = vec2(mX + i*mSize + mSize, mY);
-		vec2 vertexBotLeft = vec2(mX + i*mSize, mY);
+		vec2 vertexTopLeft = vec2(mX + i*mHeight, mY + mHeight);
+		vec2 vertexTopRight = vec2(mX + i*mHeight + mHeight, mY + mHeight);
+		vec2 vertexBotRight = vec2(mX + i*mHeight + mHeight, mY);
+		vec2 vertexBotLeft = vec2(mX + i*mHeight, mY);
 
 		vertices.push_back(vertexTopLeft);
 		vertices.push_back(vertexBotLeft);
