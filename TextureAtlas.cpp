@@ -31,13 +31,13 @@ bool TextureAtlas::LoadTextureAtlas(std::string path, int tileWidth, int tileHei
 
 	printf(str.c_str());
 
-	/*GLuint mTexture = SOIL_load_OGL_texture
+	GLuint mTexture = SOIL_load_OGL_texture
 	(
 		path.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);*/
+	);
 
 	return true;
 
