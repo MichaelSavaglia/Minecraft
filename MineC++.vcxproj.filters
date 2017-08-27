@@ -11,6 +11,10 @@
     <ClCompile Include="Shaders\ShaderLoader.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
+    <ClCompile Include="UI\Canvas.cpp" />
+    <ClCompile Include="UI\iUIElement.cpp" />
+    <ClCompile Include="UI\Label.cpp" />
+    <ClCompile Include="Chunk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -23,9 +27,15 @@
     <ClInclude Include="Types.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="TextureAtlas.h" />
+    <ClInclude Include="UI\Canvas.h" />
+    <ClInclude Include="UI\iUIElement.h" />
+    <ClInclude Include="UI\Label.h" />
+    <ClInclude Include="Chunk.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />
     <None Include="Shaders\VertexShader.glsl" />
+    <None Include="Shaders\UIFragmentShader.glsl" />
+    <None Include="Shaders\UIVertexShader.glsl" />
   </ItemGroup>
 </Project>

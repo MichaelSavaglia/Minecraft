@@ -11,8 +11,13 @@
 #include "Camera.h"
 #include "CubeData.h"
 #include "Cube.h"
+#include "Chunk.h"
 #include "Section.h"
 //#include "Input.h"
+
+#include "UI/Canvas.h"
+#include "UI/Label.h"
+#include <string>
 
 Core::Core(Window* window) : _window(window)
 {
@@ -26,41 +31,33 @@ Core::~Core()
 
 bool Core::Init()
 {
-
-	std::vector<GLfloat> posData;
-	for (size_t i = 0; i < 16; ++i)
+	std::vector<GLint> posData;
+	for (size_t x = 0; x < 4; ++x)
 	{
-		Section* testSect = new Section(i);
-		auto data = testSect->GenPosData();
-		posData.insert(posData.end(), data.begin(), data.end());
+		for (size_t z = 0; z < 4; ++z)
+		{
+			Chunk* chunk = new Chunk(x, z);
+			auto data = chunk->GetChunkCubePosList();
+			posData.insert(posData.end(), data.begin(), data.end()); // TEMPORARY AS WE OBVIOUSLY DONT WANT TO STORE THIS DATA TWICE
+		}
 	}
-
-	static const GLfloat arr[] = 
-	{
-		0.0f,1.0f,2.0f,3.0f,4.0f,5.0f,6.0f,7.0f,8.0f,9.0f,10.0f,11.0f,12.0f,13.0f,14.0f,15.0f
-	};
+	posData.shrink_to_fit();
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	GLuint posBuffer;
 	glGenBuffers(1, &posBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
-	glBufferData(GL_ARRAY_BUFFER, posData.size() * sizeof(GLfloat), &posData[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, posData.size() * sizeof(GLint), &posData[0], GL_STATIC_DRAW);
 
 	GLuint cubeBuffer;
 	glGenBuffers(1, &cubeBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
 	glBufferData(GL_ARRAY_BUFFER, CubeData::mVertices.size() * sizeof(GLfloat), &CubeData::mVertices[0], GL_STATIC_DRAW);
-
-	GLuint yBuffer;
-	glGenBuffers(1, &yBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, yBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(arr), arr, GL_STATIC_DRAW);
-
 
 	GLuint indexBuffer;
 	glGenBuffers(1, &indexBuffer);
@@ -92,6 +89,12 @@ bool Core::Init()
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	);
 	
+	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
+	Label* label = new Label("Mike sucks dick", 0, 0, 16);
+
+	Canvas* canvas = new Canvas();
+	canvas->AddElement(fps);
+	canvas->AddElement(label);
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
@@ -103,6 +106,7 @@ bool Core::Init()
 		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
 												// printf and reset timer
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
+			fps->ChangeText("FPS");
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
@@ -115,7 +119,7 @@ bool Core::Init()
 		cam->Update(true);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 
@@ -133,26 +137,24 @@ bool Core::Init()
 
 		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(2);
-		glBindBuffer(GL_ARRAY_BUFFER, yBuffer);
-		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribIPointer(1, 3, GL_INT, 0, (void*)0);
 		
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
 		glVertexAttribDivisor(1, 1);
-		glVertexAttribDivisor(2, 4096);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-		//glDrawElements(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0);
-		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, 4096 * 16);
+		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, posData.size() / 3);
 
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
+		glVertexAttribDivisor(1, 0);
+
+		glDisable(GL_DEPTH_TEST);
+		canvas->Draw();
 
 
 		glfwSwapBuffers(_window->GetGLFWWindow());
