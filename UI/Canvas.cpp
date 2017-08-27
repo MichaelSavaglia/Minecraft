@@ -31,11 +31,10 @@ void Canvas::Draw()
 {
 	glUseProgram(mShader);
 	
-	for (int layer = mCanvasElements.size() - 1; layer >= 0; --layer)
+	for (int layer = 0; layer < mCanvasElements.size(); ++layer)
 	{
 		for (auto element : mCanvasElements[layer])
 		{
-			
 			glUniform1i(mUniformLocation, 0);
 			element->Draw();
 		}

@@ -10,5 +10,10 @@ void main()
 {
 	vec4 texColor = texture( myTextureSampler, UV);
 
+	if(texColor.a < 0.1)
+	{
+		discard;
+	}
+
 	color = texColor.rgba;
 }
