@@ -18,6 +18,7 @@
 
 #include "UI/Canvas.h"
 #include "UI/Label.h"
+#include "UI/Button.h"
 #include <string>
 
 Core::Core(Window* window) : _window(window)
@@ -89,7 +90,10 @@ bool Core::Init()
 	);
 	
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
-	Label* label = new Label("Mike sucks dick", 0, 0, 18);
+	Label* label = new Label("Mike sucks dick", 0, 0, 16);
+	Button* button = new Button("", [&]() {
+		label->ChangeText("What a Callback.");
+	});
 
 	Canvas* canvas = new Canvas();
 	canvas->AddElement(fps);
@@ -161,6 +165,7 @@ bool Core::Init()
 		glDisableVertexAttribArray(1);
 		glVertexAttribDivisor(1, 0);
 
+		button->Update();
 		glDisable(GL_DEPTH_TEST);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		canvas->Draw();
