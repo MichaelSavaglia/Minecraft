@@ -13,6 +13,7 @@
 #include "Cube.h"
 #include "Chunk.h"
 #include "Section.h"
+
 //#include "Input.h"
 
 #include "UI/Canvas.h"
@@ -22,7 +23,8 @@
 
 Core::Core(Window* window) : _window(window)
 {
-
+	/*textureAtlas = new TextureAtlas();
+	textureAtlas->LoadTextureAtlas("Textures/dirt.png", 64, 64, 64, 64);*/
 }
 
 
@@ -60,6 +62,11 @@ bool Core::Init()
 	glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
 	glBufferData(GL_ARRAY_BUFFER, CubeData::mVertices.size() * sizeof(GLfloat), &CubeData::mVertices[0], GL_STATIC_DRAW);
 
+	GLuint textureBuffer;
+	glGenBuffers(1, &textureBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+	glBufferData(GL_ARRAY_BUFFER, CubeData::mUVs.size() * sizeof(GLfloat), &CubeData::mUVs[0], GL_STATIC_DRAW);
+
 	GLuint indexBuffer;
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
@@ -74,20 +81,12 @@ bool Core::Init()
 
 	Camera* cam = new Camera(_window->GetGLFWWindow());
 	
-	GLuint textureID;
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		int width, height;
-		unsigned char* image = SOIL_load_image("Textures/dirt.png", &width, &height, 0, SOIL_LOAD_RGB);// SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-		SOIL_free_image_data(image);
 	GLuint TextureSampler = glGetUniformLocation(ProgramID, "myTextureSampler");
 	GLuint textureSheet = SOIL_load_OGL_texture(
-		"Textures/texturesheet.png",
+		"Textures/dirt.png",
 		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		SOIL_CREATE_NEW_ID,0
 	);
 	
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
@@ -102,6 +101,7 @@ bool Core::Init()
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
+
 	do
 	{
 		// Measure speed
@@ -133,9 +133,11 @@ bool Core::Init()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(ProgramID);
 
-	/*	glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureSheet);
-		glUniform1i(TextureSampler, 0);*/
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glUniform1i(TextureSampler, 0);
 
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
@@ -144,6 +146,10 @@ bool Core::Init()
 		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
 		glVertexAttribIPointer(1, 3, GL_INT, 0, (void*)0);
+
+		glEnableVertexAttribArray(2);
+		glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);

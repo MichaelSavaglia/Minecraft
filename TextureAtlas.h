@@ -22,6 +22,8 @@ private:
 
 	GLuint mTexture;
 
+
+	GLuint mDirtTexture() { return mTexture; }
 public:
 	TextureAtlas();
 	~TextureAtlas();

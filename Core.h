@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "Dependencies\soil\SOIL.h"
 #include "Window.h"
-
+#include "TextureAtlas.h"
 class Core
 {
 public:
@@ -22,5 +22,6 @@ public:
 
 private:
 	Window* _window;
+	TextureAtlas* textureAtlas;
 };
 
