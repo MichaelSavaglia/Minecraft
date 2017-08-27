@@ -8,7 +8,7 @@ public:
 	Section(uint8 yPos);
 	~Section();
 
-	void GenPosList(int x, int z);
+	void GenPosList(int x, int z, int heightMap[16][16]);
 
 	inline uint8 GetYPos()		const {return mYPos;}
 
