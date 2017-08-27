@@ -10,6 +10,7 @@
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="Shaders\ShaderLoader.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="TextureAtlas.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -21,6 +22,7 @@
     <ClInclude Include="Shaders\ShaderLoader.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="TextureAtlas.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

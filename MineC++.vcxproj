@@ -138,6 +138,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="Shaders\ShaderLoader.cpp" />
+    <ClCompile Include="TextureAtlas.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="Section.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Shaders\ShaderLoader.h" />
+    <ClInclude Include="TextureAtlas.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

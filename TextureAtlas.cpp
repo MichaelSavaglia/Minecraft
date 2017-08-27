@@ -14,28 +14,40 @@ TextureAtlas::~TextureAtlas()
 {
 }
 
-void TextureAtlas::LoadTextureAtlas(std::string path, size_t tileWidth, size_t tileHeight, size_t imageWidth, size_t imageHeight)
+bool TextureAtlas::LoadTextureAtlas(std::string path, int tileWidth, int tileHeight, int imageWidth, int imageHeight)
 {
-	mTexturePath = path;
-	mTileWidth = tileWidth;
-	mTileHeight = tileHeight;
-	mImageWidth = imageWidth;
-	mImageHeight = imageHeight;
+	mTexturePath	= path;
+	mTileWidth		= tileWidth;
+	mTileHeight		= tileHeight;
+	mImageWidth		= imageWidth;
+	mImageHeight	= imageHeight;
 
-	GLuint tex_2d = SOIL_load_OGL_texture
+	auto channelcount = 0;
+	auto var = SOIL_load_image(path.c_str(), &mImageWidth, &imageHeight, &channelcount, 0);
+
+	auto imageSize = channelcount * 24 * imageWidth * imageHeight;
+
+	auto str = std::string((const char*)var);
+
+	printf(str.c_str());
+
+	/*GLuint mTexture = SOIL_load_OGL_texture
 	(
 		path.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
+	);*/
+
+	return true;
 
 }
 
-void TextureAtlas::Reload()
+bool TextureAtlas::Reload()
 {
 	if (mTexturePath != "")
 	{
-		LoadTextureAtlas(mTexturePath, mTileWidth, mTileHeight, mImageWidth, mImageHeight);
+		return LoadTextureAtlas(mTexturePath, mTileWidth, mTileHeight, mImageWidth, mImageHeight);
 	}
+	return false;
 }

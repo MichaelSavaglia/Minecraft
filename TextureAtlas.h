@@ -1,20 +1,33 @@
 #pragma once
 #include <string>
+#include <vector>
+class Texture
+{
+private:
+	int mWidth;
+	int mHeight;
+
+	unsigned const char* data[];
+
+};
 class TextureAtlas
 {
 private:
+	std::vector<Texture> mTextures;
 	std::string mTexturePath;
-	std::size_t mTileWidth;
-	std::size_t mTileHeight;
-	std::size_t mImageWidth;
-	std::size_t mImageHeight;
+	int mTileWidth;
+	int mTileHeight;
+	int mImageWidth;
+	int mImageHeight;
+
+	GLuint mTexture;
 
 public:
 	TextureAtlas();
 	~TextureAtlas();
 
 
-	void LoadTextureAtlas(std::string path, size_t tileWidth, size_t tileHeight, size_t imageWidth, size_t imageHeight);
-	void Reload();
+	bool LoadTextureAtlas(std::string path,int tileWidth, int tileHeight, int imageWidth, int imageHeight);
+	bool Reload();
 };
 
