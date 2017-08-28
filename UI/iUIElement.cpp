@@ -12,9 +12,8 @@ iUIElement::iUIElement(int x, int y, int width, int height)
 	mY = y;
 	mWidth = width;
 	mHeight = height;
-	mBufferNeedsUpdate = true;
 
-	SetBuffers();
+	mBufferNeedsUpdate = true;
 }
 
 void iUIElement::SetBuffers()
@@ -93,53 +92,53 @@ void iUIElement::SetVerts(glm::vec2 & top_left, glm::vec2 & top_right, glm::vec2
 	using glm::vec2;
 
 	//Yeah... I know
-	if (mAnchor & UIAllignment::BOT_RIGHT)
+	if (mAnchor & UIAllignment::TOP_LEFT)
 	{
 		top_left	= vec2(mX					, mY);
 		top_right	= vec2(mX + 2.0f * mWidth	, mY);
-		bot_left	= vec2(mX + 2.0f * mWidth	, mY - 2.0f * mHeight);
-		bot_right	= vec2(mX					, mY - 2.0f * mHeight);
+		bot_left	= vec2(mX					, mY - 2.0f * mHeight);
+		bot_right	= vec2(mX + 2.0f * mWidth	, mY - 2.0f * mHeight);
 	}
-	else if (mAnchor & UIAllignment::BOT_MIDDLE)
+	else if (mAnchor & UIAllignment::TOP_MIDDLE)
 	{
 		top_left	= vec2(mX - 1.0f * mWidth	, mY);
 		top_right	= vec2(mX + 1.0f * mWidth	, mY);
 		bot_left	= vec2(mX + 1.0f * mWidth	, mY - 2.0f * mHeight);
 		bot_right	= vec2(mX - 1.0f * mWidth	, mY - 2.0f * mHeight);
 	}
-	else if (mAnchor & UIAllignment::BOT_LEFT)
+	else if (mAnchor & UIAllignment::TOP_RIGHT)
 	{
 		top_left	= vec2(mX - 2.0f * mWidth	, mY);
 		top_right	= vec2(mX					, mY);
-		bot_left	= vec2(mX					, mY - 2.0f * mHeight);
-		bot_right	= vec2(mX - 2.0f * mWidth	, mY - 2.0f * mHeight);
+		bot_left	= vec2(mX - 2.0f * mWidth	, mY - 2.0f * mHeight);
+		bot_right	= vec2(mX					, mY - 2.0f * mHeight);
 	}
-	else if (mAnchor & UIAllignment::TOP_RIGHT)
+	else if (mAnchor & UIAllignment::BOT_RIGHT)
 	{
-		top_left	= vec2(mX					, mY + 2.0f * mHeight);
-		top_right	= vec2(mX + 2.0f * mWidth	, mY + 2.0f * mHeight);
-		bot_left	= vec2(mX + 2.0f * mWidth	, mY);
+		top_left	= vec2(mX - 2.0f * mWidth	, mY + 2.0f * mHeight);
+		top_right	= vec2(mX					, mY + 2.0f * mHeight);
+		bot_left	= vec2(mX - 2.0f * mWidth	, mY);
 		bot_right	= vec2(mX					, mY);
 	}
-	else if (mAnchor & UIAllignment::TOP_MIDDLE)
+	else if (mAnchor & UIAllignment::BOT_MIDDLE)
 	{
 		top_left	= vec2(mX - 1.0f * mWidth	, mY + 2.0f * mHeight);
 		top_right	= vec2(mX + 1.0f * mWidth	, mY + 2.0f * mHeight);
 		bot_left	= vec2(mX + 1.0f * mWidth	, mY);
 		bot_right	= vec2(mX - 1.0f * mWidth	, mY);
 	}
-	else if (mAnchor & UIAllignment::TOP_LEFT)
+	else if (mAnchor & UIAllignment::BOT_LEFT)
 	{
-		top_left	= vec2(mX - 2.0f * mWidth	, mY + 2.0f * mHeight);
-		top_right	= vec2(mX					, mY + 2.0f * mHeight);
+		top_left	= vec2(mX					, mY + 2.0f * mHeight);
+		top_right	= vec2(mX + 2.0f * mWidth	, mY + 2.0f * mHeight);
 		bot_left	= vec2(mX					, mY);
-		bot_right	= vec2(mX - 2.0f * mWidth	, mY);
+		bot_right	= vec2(mX + 2.0f * mWidth	, mY);
 	}
 	else //if (mAnchor & UIAllignment::CENTER) //DEFAULT ALLIGNMENT
 	{
 		top_left = vec2(mX - 1.0f * mWidth, mY + 1.0f * mHeight);
 		top_right = vec2(mX + 1.0f * mWidth, mY + 1.0f * mHeight);
-		bot_left = vec2(mX + 1.0f * mWidth, mY - 1.0f * mHeight);
-		bot_right = vec2(mX - 1.0f * mWidth, mY - 1.0f * mHeight);
+		bot_left = vec2(mX - 1.0f * mWidth, mY - 1.0f * mHeight);
+		bot_right = vec2(mX + 1.0f * mWidth, mY - 1.0f * mHeight);
 	}
 }
