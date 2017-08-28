@@ -12,6 +12,7 @@ public:
 	}
 
 	GLuint LoadTexture(const char* path);
+	GLuint GetTexture(const char* path);
 
 	~TextureManager();
 private:

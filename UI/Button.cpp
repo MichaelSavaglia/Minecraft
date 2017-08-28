@@ -1,5 +1,4 @@
 #include "Button.h"
-#include <SOIL.h>
 #include "Label.h"
 #include "../TextureManager.h"
 

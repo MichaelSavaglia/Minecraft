@@ -10,14 +10,14 @@ public:
 
 	void Update();
 	virtual void Draw();
-	inline void BindOnClick(std::function<void()> onClickFunc) { mOnClick = std::bind(onClickFunc); };
-	inline void BindOnRelease(std::function<void()> onReleaseFunc) { mOnRelease = std::bind(onReleaseFunc); };
-	inline void ChangeTextSize(int size) { mWidth, mHeight = size; mBufferNeedsUpdate = true; };
-	inline void ChangeText(char* text) { mLabel->ChangeText(text); };
-	inline void ChangeText(const char* text) { mLabel->ChangeText(text); };
-	inline void ChangeText(std::string text) { mLabel->ChangeText(text); };
+	inline void BindOnClick(std::function<void()> onClickFunc)		{ mOnClick = std::bind(onClickFunc); };
+	inline void BindOnRelease(std::function<void()> onReleaseFunc)	{ mOnRelease = std::bind(onReleaseFunc); };
+	inline void ChangeTextSize(int size)							{ mWidth, mHeight = size;mBufferNeedsUpdate = true; };
+	inline void ChangeText(char* text)								{ mLabel->ChangeText(text); };
+	inline void ChangeText(const char* text)						{ mLabel->ChangeText(text); };
+	inline void ChangeText(std::string text)						{ mLabel->ChangeText(text); };
 
-	inline std::string GetText() { return mLabel->GetText(); };
+	inline std::string GetText() const { return mLabel->GetText(); };
 
 private:
 	std::function<void()> mOnClick;
