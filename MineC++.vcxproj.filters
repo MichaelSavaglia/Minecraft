@@ -15,6 +15,7 @@
     <ClCompile Include="UI\iUIElement.cpp" />
     <ClCompile Include="UI\Label.cpp" />
     <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="UI\Button.cpp" />
     <ClCompile Include="HeightGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +33,7 @@
     <ClInclude Include="UI\iUIElement.h" />
     <ClInclude Include="UI\Label.h" />
     <ClInclude Include="Chunk.h" />
+    <ClInclude Include="UI\Button.h" />
     <ClInclude Include="HeightGenerator.h" />
   </ItemGroup>
   <ItemGroup>

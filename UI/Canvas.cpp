@@ -17,7 +17,7 @@ Canvas::~Canvas()
 	glDeleteProgram(mShader);
 }
 
-void Canvas::AddElement(iUIElement * ele, GLuint layer)
+void Canvas::AddElement(iUIElement* ele, GLuint layer)
 {
 	if (mCanvasElements.size() + 1 < layer)
 	{

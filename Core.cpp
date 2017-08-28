@@ -18,6 +18,7 @@
 
 #include "UI/Canvas.h"
 #include "UI/Label.h"
+#include "UI/Button.h"
 #include <string>
 
 Core::Core(Window* window) : _window(window)
@@ -49,7 +50,7 @@ bool Core::Init()
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	GLuint posBuffer;
 	glGenBuffers(1, &posBuffer);
@@ -93,12 +94,21 @@ bool Core::Init()
 		SOIL_CREATE_NEW_ID,0
 	);
 	
+	double toggle = 0.0;
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
-	Label* label = new Label("Mike sucks dick", 0, 0, 18);
+	Label* label = new Label("Mike sucks dick", 0, 0, 16);
+	Button* button = new Button("Textures/dirt.png", 0, 0, 100, 100, "A button");
+	button->BindOnClick([&]() {
+		std::string text = std::to_string(toggle);
+		label->ChangeText(text);
+	});
+
+	button->SetAllignment(UIAllignment::BOT_RIGHT);
 
 	Canvas* canvas = new Canvas();
 	canvas->AddElement(fps);
 	canvas->AddElement(label);
+	canvas->AddElement(button);
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
@@ -115,13 +125,14 @@ bool Core::Init()
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
+		toggle = currentTime - lastTime;
 
 		//if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
 		//{
 		//	printf("Key Pressed \n");
 		//}
 
-		cam->Update(true);
+		cam->Update(false);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
 		glEnable(GL_CULL_FACE);
@@ -168,6 +179,7 @@ bool Core::Init()
 		glDisableVertexAttribArray(2);
 		glVertexAttribDivisor(1, 0);
 
+		button->Update();
 		glDisable(GL_DEPTH_TEST);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		canvas->Draw();

@@ -5,16 +5,18 @@ class Label final : public iUIElement
 {
 public:
 	Label(char* text, int x, int y, int size);
+	Label(std::string text, int x, int y, int size);
 	~Label();
 	virtual void Draw();
-	inline void ChangePosition(int x, int y) { mX = x; mY = y; SetBuffers(); };
-	inline void ChangeSize(int size) { mSize = size; SetBuffers(); };
-	inline void ChangeText(char* text) { mText = text; SetBuffers(); };
-	inline void ChangeText(const char* text) { mText = const_cast<char*>(text); SetBuffers(); };
+	inline void ChangeSize(int size) { mWidth, mHeight = size; mBufferNeedsUpdate = true;};
+	inline void ChangeText(char* text) { mText = text; mBufferNeedsUpdate = true; };
+	inline void ChangeText(const char* text) { mText = const_cast<char*>(text); mBufferNeedsUpdate = true; };
+	inline void ChangeText(std::string text) { mText = text; mBufferNeedsUpdate = true; };
+
+	inline std::string GetText() { return mText; }
 
 private:
-	char* mText;
-	int mX, mY, mSize;
+	std::string mText;
 	void SetBuffers();
 };
 
