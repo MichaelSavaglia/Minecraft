@@ -5,8 +5,8 @@ iUIElement::iUIElement(int x, int y, int width, int height)
 {
 	mAnchor = UIAllignment::CENTER;
 
-	glGenBuffers(1, &mVertexBuffer);
-	glGenBuffers(1, &mUVBuffer);
+	glCreateBuffers(1, &mVertexBuffer);
+	glCreateBuffers(1, &mUVBuffer);
 
 	mX = x;
 	mY = y;
@@ -55,19 +55,24 @@ iUIElement::~iUIElement()
 
 void iUIElement::Draw()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec2), &vertices[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, mUVBuffer);
-	glBufferData(GL_ARRAY_BUFFER, UVs.size() * sizeof(glm::vec2), &UVs[0], GL_STATIC_DRAW);
+	//if (mBufferNeedsUpdate)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
+		glNamedBufferStorage(mVertexBuffer, vertices.size() * sizeof(glm::vec2), &vertices[0], GL_DYNAMIC_STORAGE_BIT);
+		glBindBuffer(GL_ARRAY_BUFFER, mUVBuffer);
+		glNamedBufferStorage(mUVBuffer, UVs.size() * sizeof(glm::vec2), &UVs[0], GL_DYNAMIC_STORAGE_BIT);
+		//mBufferNeedsUpdate = false;
+	}
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mTexture);
 
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
 	glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-	glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, mUVBuffer);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 

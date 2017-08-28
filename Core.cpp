@@ -95,8 +95,8 @@ bool Core::Init()
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* label = new Label("Mike sucks dick", 0, 0, 16);
 	Button* button = new Button("Textures/dirt.png", 5, 5, 100, 100, "A button");
-	Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
-	img->SetPosition(500, 500);
+	//Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
+	//img->SetPosition(500, 500);
 	button->BindOnClick([&]() {
 		std::string text = std::to_string(toggle);
 		label->ChangeText(text);
@@ -108,7 +108,7 @@ bool Core::Init()
 	canvas->AddElement(fps);
 	canvas->AddElement(label);
 	canvas->AddElement(button);
-	canvas->AddElement(img);
+	//canvas->AddElement(img);
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
@@ -142,7 +142,7 @@ bool Core::Init()
 
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		glClearColor(0.0, 0.0, 0.0, 1.0);
+		glClearColor(0.529, 0.807, 0.980, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(ProgramID);
 
