@@ -28,7 +28,10 @@ void Button::Draw()
 		SetBuffers();
 		mBufferNeedsUpdate = false;
 	}
+	
 
-	iUIElement::Draw();
+	//not sure if what i did was correct but you need to define background texture more clearly
+	//iUIElement::Draw(); ?? 
+
 	mLabel->Draw();
 }

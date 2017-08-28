@@ -31,6 +31,7 @@ Core::Core(Window* window) : _window(window)
 
 Core::~Core()
 {
+
 }
 
 bool Core::Init()
@@ -115,7 +116,6 @@ bool Core::Init()
 
 	do
 	{
-	
 		// Measure speed
 		double currentTime = glfwGetTime();
 		nbFrames++;
@@ -148,6 +148,7 @@ bool Core::Init()
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureSheet);
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glUniform1i(TextureSampler, 0);
@@ -178,9 +179,11 @@ bool Core::Init()
 		glDisableVertexAttribArray(2);
 		glVertexAttribDivisor(1, 0);
 
+
 		button->Update();
 		glDisable(GL_DEPTH_TEST);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 		canvas->Draw();
 
 		Input::Instance()->ClearKeyBuffer();
