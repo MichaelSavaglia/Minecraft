@@ -41,6 +41,17 @@ GLuint TextureManager::LoadTexture(const char * path)
 	//}
 }
 
+GLuint TextureManager::GetTexture(const char * path)
+{
+	auto id = mTextures[path];
+	if (id)
+		return id;
+	printf("Could not find texture %s", path);
+	return -1;
+	
+}
+
 TextureManager::~TextureManager()
 {
+
 }
