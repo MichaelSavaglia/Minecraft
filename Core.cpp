@@ -19,6 +19,7 @@
 #include "UI/Canvas.h"
 #include "UI/Label.h"
 #include "UI/Button.h"
+#include "UI/Image.h"
 #include <string>
 
 Core::Core(Window* window) : _window(window)
@@ -94,6 +95,8 @@ bool Core::Init()
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* label = new Label("Mike sucks dick", 0, 0, 16);
 	Button* button = new Button("Textures/dirt.png", 5, 5, 100, 100, "A button");
+	Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
+	img->SetPosition(500, 500);
 	button->BindOnClick([&]() {
 		std::string text = std::to_string(toggle);
 		label->ChangeText(text);
@@ -105,6 +108,7 @@ bool Core::Init()
 	canvas->AddElement(fps);
 	canvas->AddElement(label);
 	canvas->AddElement(button);
+	canvas->AddElement(img);
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;

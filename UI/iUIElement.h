@@ -11,15 +11,17 @@ public:
 	virtual void Draw() = 0;
 	virtual void SetBuffers();
 	inline GLuint GetTextureID() { return mTexture; };
-	inline void ChangeSize(int width, int height) { mWidth = width; mHeight = height; mBufferNeedsUpdate = true; };
-	inline void ChangePosition(int x, int y) { mX = x; mY = y; mBufferNeedsUpdate = true; };
+	inline void SetSize(int width, int height) { mWidth = width; mHeight = height; mBufferNeedsUpdate = true; };
+	inline void SetPosition(int x, int y) { mX = x; mY = y; mBufferNeedsUpdate = true; };
+	inline void SetXPos(int x) { mX = x; mBufferNeedsUpdate = true; };
+	inline void SetYPos(int y) { mY = y; mBufferNeedsUpdate = true; };
 	int GetWindowHeight();
 	inline void SetAllignment(int8_t anchor) { mAnchor = anchor; };
 
-	inline int GetX() { return mX; }
-	inline int GetY() { return mY; }
-	inline int GetWidth() { return mWidth; }
-	inline int GetHeight() { return mHeight; }
+	inline int GetX()		{ return mX; }
+	inline int GetY()		{ return mY; }
+	inline int GetWidth()	{ return mWidth; }
+	inline int GetHeight()	{ return mHeight; }
 
 private:
 	void SetVerts(glm::vec2& top_left, glm::vec2& top_right, glm::vec2& bot_left, glm::vec2& bot_right);
