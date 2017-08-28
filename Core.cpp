@@ -67,11 +67,7 @@ bool Core::Init()
 	glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
 	glBufferData(GL_ARRAY_BUFFER, CubeData::mUVs.size() * sizeof(GLfloat), &CubeData::mUVs[0], GL_STATIC_DRAW);
 
-	GLuint indexBuffer;
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0], GL_STATIC_DRAW);
-
+	
 	GLuint textureIndexBuffer;
 	glGenBuffers(1, &textureIndexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, textureIndexBuffer);
@@ -168,10 +164,8 @@ bool Core::Init()
 
 		glVertexAttribDivisor(1, 1);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-
-		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, posData.size() / 3);
+		glDrawArraysInstanced(GL_TRIANGLES, 0, CubeData::mVertices.size(), posData.size() / 3);
 
 
 		glDisableVertexAttribArray(0);
