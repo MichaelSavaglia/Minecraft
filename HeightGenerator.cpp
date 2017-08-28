@@ -36,5 +36,5 @@ double HeightGenerator::GetSmoothNoise(double x, double z)
 
 double HeightGenerator::interpolate(double a, double b, double blend)
 {
-	
+	return 0.0;
 }

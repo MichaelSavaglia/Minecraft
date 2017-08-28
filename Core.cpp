@@ -92,13 +92,13 @@ bool Core::Init()
 	double toggle = 0.0;
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* label = new Label("Mike sucks dick", 0, 0, 16);
-	Button* button = new Button("Textures/dirt.png", 0, 0, 100, 100, "A button");
+	Button* button = new Button("Textures/dirt.png", 5, 5, 100, 100, "A button");
 	button->BindOnClick([&]() {
 		std::string text = std::to_string(toggle);
 		label->ChangeText(text);
 	});
 
-	button->SetAllignment(UIAllignment::BOT_RIGHT);
+	button->SetAllignment(UIAllignment::BOT_LEFT);
 
 	Canvas* canvas = new Canvas();
 	canvas->AddElement(fps);

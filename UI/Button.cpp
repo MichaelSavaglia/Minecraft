@@ -12,8 +12,6 @@ Button::Button(const char* texturePath, int x, int y, int width, int height, std
 	);
 
 	mLabel = new Label(text, x, y, height);
-
-	SetBuffers();
 }
 
 
