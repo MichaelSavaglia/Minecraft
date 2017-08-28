@@ -14,7 +14,7 @@
 #include "Chunk.h"
 #include "Section.h"
 
-//#include "Input.h"
+#include "Input.h"
 
 #include "UI/Canvas.h"
 #include "UI/Label.h"
@@ -111,6 +111,7 @@ bool Core::Init()
 
 	do
 	{
+	
 		// Measure speed
 		double currentTime = glfwGetTime();
 		nbFrames++;
@@ -123,10 +124,10 @@ bool Core::Init()
 		}
 		toggle = currentTime - lastTime;
 
-		//if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
-		//{
-		//	printf("Key Pressed \n");
-		//}
+		if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
+		{
+			printf("Key Pressed \n");
+		}
 
 		cam->Update(true);
 		auto projection = cam->GetProjectionMatrix();
@@ -178,9 +179,11 @@ bool Core::Init()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		canvas->Draw();
 
-
+		Input::Instance()->ClearKeyBuffer();
 		glfwSwapBuffers(_window->GetGLFWWindow());
 		glfwPollEvents();
+
+	
 	} while (glfwGetKey(_window->GetGLFWWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(_window->GetGLFWWindow()) == 0);
 
