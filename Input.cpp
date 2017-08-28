@@ -37,22 +37,26 @@ void Input::ClearKeyBuffer()
 {
 	memset(&_previousKeys, false, 1024);
 }
-
-bool Input::GetKeyPressed(uint16 key)
+bool Input::GetKeyDown(int key)
+{
+	return !_keys[key];
+}
+bool Input::GetKeyUp(int key)
+{
+	return _keys[key];
+}
+bool Input::GetKeyPressed(int key)
 {
 	return _previousKeys[key];
 }
-
 bool Input::GetMouseButtonPressed(uint16 key)
 {
 	return _mouseButtons[key];
 }
-
 const glm::vec2& Input::GetMousePosition()
 {
 	return _mousePosition;
 }
-
 const glm::vec2 & Input::GetMouseWheelValues()
 {
 	return _mouseWheel;

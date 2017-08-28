@@ -26,7 +26,11 @@ public:
 public:
 	void SetMousePosition(double x, double y);
 	void ClearKeyBuffer();
-	bool GetKeyPressed(uint16 key);
+
+	bool GetKeyPressed(int key);
+	bool GetKeyDown(int key);
+	bool GetKeyUp(int key);
+
 	bool GetMouseButtonPressed(uint16 key);
 	const glm::vec2& GetMousePosition();
 	const glm::vec2& GetMouseWheelValues();
