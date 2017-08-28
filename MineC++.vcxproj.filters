@@ -35,6 +35,7 @@
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="UI\Button.h" />
     <ClInclude Include="HeightGenerator.h" />
+    <ClInclude Include="GenerateCubeData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

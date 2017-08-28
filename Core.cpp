@@ -132,7 +132,7 @@ bool Core::Init()
 		//	printf("Key Pressed \n");
 		//}
 
-		cam->Update(false);
+		cam->Update(true);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
 		glEnable(GL_CULL_FACE);
@@ -169,7 +169,7 @@ bool Core::Init()
 		glVertexAttribDivisor(1, 1);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, textureIndexBuffer);
+
 
 		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, posData.size() / 3);
 
