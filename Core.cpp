@@ -14,11 +14,12 @@
 #include "Chunk.h"
 #include "Section.h"
 
-//#include "Input.h"
+#include "Input.h"
 
 #include "UI/Canvas.h"
 #include "UI/Label.h"
 #include "UI/Button.h"
+#include "UI/Image.h"
 #include <string>
 
 Core::Core(Window* window) : _window(window)
@@ -30,6 +31,7 @@ Core::Core(Window* window) : _window(window)
 
 Core::~Core()
 {
+
 }
 
 bool Core::Init()
@@ -67,11 +69,7 @@ bool Core::Init()
 	glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
 	glBufferData(GL_ARRAY_BUFFER, CubeData::mUVs.size() * sizeof(GLfloat), &CubeData::mUVs[0], GL_STATIC_DRAW);
 
-	GLuint indexBuffer;
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0], GL_STATIC_DRAW);
-
+	
 	GLuint textureIndexBuffer;
 	glGenBuffers(1, &textureIndexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, textureIndexBuffer);
@@ -97,7 +95,9 @@ bool Core::Init()
 	double toggle = 0.0;
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* label = new Label("Mike sucks dick", 0, 0, 16);
-	Button* button = new Button("Textures/dirt.png", 5, 5, 100, 100, "A button");
+	Button* button = new Button("Textures/dirt.png", 500, 300, 100, 100, "A button");
+	//Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
+	//img->SetPosition(500, 500);
 	button->BindOnClick([&]() {
 		std::string text = std::to_string(toggle);
 		label->ChangeText(text);
@@ -108,10 +108,10 @@ bool Core::Init()
 	canvas->AddElement(fps);
 	canvas->AddElement(label);
 	canvas->AddElement(button);
+	//canvas->AddElement(img);
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
-
 	do
 	{
 		// Measure speed
@@ -126,12 +126,12 @@ bool Core::Init()
 		}
 		toggle = currentTime - lastTime;
 
-		//if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
-		//{
-		//	printf("Key Pressed \n");
-		//}
+		if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
+		{
+			printf("Key Pressed \n");
+		}
 
-		cam->Update(true);
+		cam->Update(false);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
 		glEnable(GL_CULL_FACE);
@@ -140,12 +140,13 @@ bool Core::Init()
 
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		glClearColor(0.0, 0.0, 0.0, 1.0);
+		glClearColor(0.529, 0.807, 0.980, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(ProgramID);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureSheet);
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glUniform1i(TextureSampler, 0);
@@ -167,10 +168,8 @@ bool Core::Init()
 
 		glVertexAttribDivisor(1, 1);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-
-		glDrawElementsInstanced(GL_TRIANGLES, CubeData::mIndices.size(), GL_UNSIGNED_SHORT, 0, posData.size() / 3);
+		glDrawArraysInstanced(GL_TRIANGLES, 0, CubeData::mVertices.size(), posData.size() / 3);
 
 
 		glDisableVertexAttribArray(0);
@@ -178,14 +177,18 @@ bool Core::Init()
 		glDisableVertexAttribArray(2);
 		glVertexAttribDivisor(1, 0);
 
+
 		button->Update();
 		glDisable(GL_DEPTH_TEST);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 		canvas->Draw();
 
-
+		Input::Instance()->ClearKeyBuffer();
 		glfwSwapBuffers(_window->GetGLFWWindow());
 		glfwPollEvents();
+
+	
 	} while (glfwGetKey(_window->GetGLFWWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(_window->GetGLFWWindow()) == 0);
 

@@ -77,10 +77,14 @@ void Label::SetBuffers()
 	case TEXT_ALLIGNMENT::LEFT:
 		for (unsigned int i = 0; i < length; ++i)
 		{
-			vertexTopLeft = vec2(mX + i*mHeight, mY + halfHeight);
+			/*vertexTopLeft = vec2(mX + i*mHeight, mY + halfHeight);
 			vertexTopRight = vec2(mX + i*mHeight + mHeight, mY + halfHeight);
 			vertexBotRight = vec2(mX + i*mHeight + mHeight, mY - halfHeight);
-			vertexBotLeft = vec2(mX + i*mHeight, mY - halfHeight);
+			vertexBotLeft = vec2(mX + i*mHeight, mY - halfHeight);*/
+			vertexTopLeft = vec2(mX + i*mWidth, mY + mHeight);
+			vertexTopRight = vec2(mX + i*mWidth + mWidth, mY + mHeight);
+			vertexBotRight = vec2(mX + i*mWidth + mWidth, mY);
+			vertexBotLeft = vec2(mX + i*mWidth, mY);
 
 			vertices.push_back(vertexTopLeft);
 			vertices.push_back(vertexBotLeft);

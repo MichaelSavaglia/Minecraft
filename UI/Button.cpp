@@ -3,14 +3,11 @@
 #include "../Window.h"
 #include "../Input.h"
 
+#include "../TextureManager.h"
+
 Button::Button(const char* texturePath, int x, int y, int width, int height, std::string text) : iUIElement(x, y, width, height)
 {
-	mTexture = SOIL_load_OGL_texture(
-		texturePath,
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
-	);
+	mTexture = TextureManager::Instance()->LoadTexture(texturePath);
 
 	mLabel = new Label(text, x, y, height);
 	mAnchor = UIAllignment::CENTER;
@@ -27,14 +24,12 @@ Button::~Button()
 
 void Button::Update()
 {
-	if (mInput->GetMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
+	if (mInput->GetMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
 	{
 		glm::vec2 pos = mInput->GetMousePosition();
-		float halfWidth = mWidth / 2.0f;
-		float halfHeight = mHeight / 2.0f;
 
-		if (pos.x < mX + halfWidth && pos.x > mX - halfWidth &&
-			pos.y < mY + halfHeight && pos.y > mX - halfWidth)
+		if (pos.x < mX + mWidth && pos.x > mX - mWidth &&
+			pos.y < mY + mHeight && pos.y > mX - mHeight)
 		{
 			std::invoke(mOnClick);
 		}
@@ -62,8 +57,11 @@ void Button::Draw()
 		SetBuffers();
 		mBufferNeedsUpdate = false;
 	}
+	
 
-	iUIElement::Draw();
+	//not sure if what i did was correct but you need to define background texture more clearly
+	//iUIElement::Draw();
+
 	mLabel->Draw();
 }
 
