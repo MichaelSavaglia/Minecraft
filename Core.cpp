@@ -102,8 +102,7 @@ bool Core::Init()
 		std::string text = std::to_string(toggle);
 		label->ChangeText(text);
 	});
-
-	button->SetAllignment(UIAllignment::BOT_LEFT);
+	//button->SetAllignment(UIAllignment::BOT_LEFT);
 
 	Canvas* canvas = new Canvas();
 	canvas->AddElement(fps);

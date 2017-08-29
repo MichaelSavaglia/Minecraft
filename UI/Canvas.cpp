@@ -37,6 +37,7 @@ void Canvas::Draw()
 		{
 			glUniform1i(mUniformLocation, 0);
 			element->Draw();
+			element->Update();
 		}
 	}
 	

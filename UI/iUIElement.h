@@ -9,12 +9,13 @@ public:
 	iUIElement(int x, int y, int width, int height);
 	virtual ~iUIElement();
 	virtual void Draw() = 0;
+	inline virtual void Update() { ; };
 	virtual void SetBuffers();
 	inline GLuint GetTextureID() { return mTexture; };
 	inline void ChangeSize(int width, int height) { mWidth = width; mHeight = height; mBufferNeedsUpdate = true; };
 	inline void ChangePosition(int x, int y) { mX = x; mY = y; mBufferNeedsUpdate = true; };
 	int GetWindowHeight();
-	inline void SetAllignment(int8_t anchor) { mAnchor = anchor; };
+	virtual inline void SetAllignment(int8_t anchor) { mAnchor = anchor; };
 
 	inline int GetX() { return mX; }
 	inline int GetY() { return mY; }
