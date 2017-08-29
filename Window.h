@@ -12,8 +12,8 @@ class Window
 	friend Input;
 private:
 	StringPtr		_title;
-	uint16			_width;
-	uint16			_height;
+	int				_width;
+	int				_height;
 
 	GLFWwindow*		_window;
 	Input*			_input;
@@ -24,8 +24,8 @@ public:
 
 	void SetWindowTitle(StringPtr title);
 
-	inline uint16& GetWindowWidth()		noexcept { return _width;  }
-	inline uint16& GetWindowHeight()	noexcept { return _height; }
+	inline int& GetWindowWidth()		noexcept { return _width;  }
+	inline int& GetWindowHeight()		noexcept { return _height; }
 	inline GLFWwindow* GetGLFWWindow()	const noexcept { return _window; }
 
 private:
@@ -34,10 +34,10 @@ private:
 private:
 	friend static void CallbackClosed(GLFWwindow* glfwWindow);
 	friend static void CallbackIconified(GLFWwindow* glfwWindow, int iconified);
-	friend static void CallbackWindowResize(GLFWwindow* glfwWindow, uint16 width, uint16 height);
+	friend static void CallbackWindowResize(GLFWwindow* glfwWindow, int width, int height);
 	friend static void CallbackKeyPress(GLFWwindow* glfwWindow, int key, int code, int action, int mods);
 	friend static void CallbackMouseButtonPressed(GLFWwindow* glfwWindow, int button, int action, int mods);
-	friend static void CallbackScrollCallBack(GLFWwindow* glfwWindow, double xoffset, double yoffset);
+	friend static void CallbackScrollPosition(GLFWwindow* glfwWindow, double xoffset, double yoffset);
 	friend static void CallbackMouseLocation(GLFWwindow* glfwWindow, double xpos, double ypos);
 	friend static void CallbackFrameBufferResized(GLFWwindow * glfwWindow, int width, int height);
 

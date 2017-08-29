@@ -1,19 +1,23 @@
 #include "Input.h"
 #include "Window.h"
 
-Input* Input::_instance = nullptr;
 Window::Window(StringPtr title, uint16 windowWidth, uint16 windowHeight)
 {
+	_input = Input::Instance();
+
 	//TODO:: Add Logger To StartUp
 	if (!glfwInit())
 	{	
 		return;
 	}
+
 	_window = glfwCreateWindow(1280, 720, "MineC++", NULL, NULL);
+	_input->RegisterWindow(this);
 
 	if (_window == NULL) { glfwTerminate(); }
 
 	glfwMakeContextCurrent(_window);
+	glfwSetWindowUserPointer(_window, this);
 	glewExperimental = true;
 
 	if (glewInit() != GLEW_OK){}
@@ -27,10 +31,13 @@ Window::Window(StringPtr title, uint16 windowWidth, uint16 windowHeight)
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	//glfwSwapInterval(0);
-	_input = Input::Instance();
-	_input->RegisterWindow(this);
-
+	glfwSetKeyCallback(_window, CallbackKeyPress);
+	glfwSetWindowIconifyCallback(_window, CallbackIconified);
+	glfwSetWindowCloseCallback(_window, CallbackClosed);
+	glfwSetWindowSizeCallback(_window, CallbackWindowResize);
+	glfwSetCursorPosCallback(_window, CallbackMouseLocation);
+	glfwSetMouseButtonCallback(_window, CallbackMouseButtonPressed);
+	glfwSetScrollCallback(_window, CallbackScrollPosition);
 }
 
 Window::~Window()
@@ -40,7 +47,11 @@ Window::~Window()
 
 void Window::UpdateKeyboardState(int key, int code, int action, int mods)
 {
-	_input->_keys[key] = action != GLFW_RELEASE;
+	if (action == GLFW_RELEASE)
+		_input->SetKeyFalse(key);
+	if (action == GLFW_PRESS)
+		_input->SetKeyTrue(key);
+
 }
 
 void Window::UpdateMouseButtonState(int button, int action, int mods)
@@ -86,7 +97,7 @@ void CallbackIconified(GLFWwindow* glfwWindow, int iconified)
 		glfwWaitEvents();
 }
 
-void CallbackWindowResize(GLFWwindow* glfwWindow, uint16 width, uint16 height)
+void CallbackWindowResize(GLFWwindow* glfwWindow, int width, int height)
 {
 	Window* window = reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfwWindow));
 	window->_width = width;
@@ -107,7 +118,7 @@ void CallbackMouseButtonPressed(GLFWwindow* glfwWindow, int button, int action, 
 	window->UpdateMouseButtonState(button, action, mods);
 }
 
-void CallbackScrollCallBack(GLFWwindow* glfwWindow, double xoffset, double yoffset)
+void CallbackScrollPosition(GLFWwindow* glfwWindow, double xoffset, double yoffset)
 {
 	Window* window = reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfwWindow));
 	window->UpdateMouseScroll(xoffset, yoffset);

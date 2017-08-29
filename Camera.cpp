@@ -34,7 +34,7 @@ void Camera::Update(bool active)
 		mVerticalAngle += mMouseSpeed * deltaTime * float(height / 2 - ypos);
 	}
 
-	glm::vec3 direction(
+	 mDir = glm::vec3(
 		cos(mVerticalAngle) * sin(mHorizontalAngle),
 		sin(mVerticalAngle),
 		cos(mVerticalAngle) * cos(mHorizontalAngle));
@@ -44,13 +44,13 @@ void Camera::Update(bool active)
 		0,
 		cos(mHorizontalAngle - 3.14f / 2.0f));
 
-	glm::vec3 up = glm::cross(right, direction);
+	glm::vec3 up = glm::cross(right, mDir);
 
 
 	if (glfwGetKey(mWindow, GLFW_KEY_W) == GLFW_PRESS)
-		mPos += direction * deltaTime * mSpeed;
+		mPos += mDir * deltaTime * mSpeed;
 	if (glfwGetKey(mWindow, GLFW_KEY_S) == GLFW_PRESS)
-		mPos -= direction * deltaTime * mSpeed;
+		mPos -= mDir * deltaTime * mSpeed;
 	if (glfwGetKey(mWindow, GLFW_KEY_A) == GLFW_PRESS)
 		mPos -= right * deltaTime * mSpeed;
 	if (glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
@@ -60,7 +60,7 @@ void Camera::Update(bool active)
 
 	mViewMatrix = glm::lookAt(
 		mPos,
-		mPos + direction,
+		mPos + mDir,
 		up);
 
 	lastTime = currentTime;
