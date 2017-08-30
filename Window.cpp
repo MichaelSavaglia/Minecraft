@@ -23,7 +23,7 @@ Window::Window(StringPtr title, uint16 windowWidth, uint16 windowHeight)
 	if (glewInit() != GLEW_OK){}
 
 	glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
-	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

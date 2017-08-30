@@ -92,18 +92,21 @@ bool Core::Init()
 		SOIL_CREATE_NEW_ID,0
 	);
 	
-	double toggle = 0.0;
+	int clicks = 0;
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* label = new Label("Mike sucks dick", 0, 0, 16);
-	Button* button = new Button("Textures/dirt.png", 5, 5, 100, 100, "A button");
+	Button* button = new Button("Textures/dirt.png", 500, 300, 100, 100, "A button");
 	//Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
 	//img->SetPosition(500, 500);
 	button->BindOnClick([&]() {
-		std::string text = std::to_string(toggle);
-		label->ChangeText(text);
+		std::string text = std::to_string(++clicks);
+		button->ChangeText(text);
 	});
-
-	button->SetAllignment(UIAllignment::BOT_LEFT);
+	button->BindOnRelease([&]() {
+		std::string text = std::to_string(--clicks);
+		button->ChangeText(text);
+	});
+	//button->SetAllignment(UIAllignment::BOT_LEFT);
 
 	Canvas* canvas = new Canvas();
 	canvas->AddElement(fps);
@@ -113,7 +116,6 @@ bool Core::Init()
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
-
 	do
 	{
 		// Measure speed
@@ -122,18 +124,17 @@ bool Core::Init()
 		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
 												// printf and reset timer
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
-			fps->ChangeText("FPS");
+			fps->ChangeText(std::to_string(clicks));
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
-		toggle = currentTime - lastTime;
 
 		if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
 		{
 			printf("Key Pressed \n");
 		}
 
-		cam->Update(true);
+		cam->Update(false);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
 		glEnable(GL_CULL_FACE);
@@ -183,8 +184,8 @@ bool Core::Init()
 		button->Update();
 		glDisable(GL_DEPTH_TEST);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 		canvas->Draw();
+
 
 		Input::Instance()->ClearKeyBuffer();
 		glfwSwapBuffers(_window->GetGLFWWindow());
