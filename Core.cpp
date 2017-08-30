@@ -37,11 +37,13 @@ Core::~Core()
 bool Core::Init()
 {
 	std::vector<GLint> posData;
+	std::vector<Chunk*> chunks;
 	for (size_t x = 0; x < 4; ++x)
 	{
 		for (size_t z = 0; z < 4; ++z)
 		{
-			Chunk* chunk = new Chunk(x, z);
+			auto chunk = new Chunk(x, z);
+			chunks.push_back(chunk);
 			auto data = chunk->GetChunkCubePosList();
 			posData.insert(posData.end(), data.begin(), data.end()); // TEMPORARY AS WE OBVIOUSLY DONT WANT TO STORE THIS DATA TWICE
 		}
