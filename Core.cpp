@@ -94,6 +94,7 @@ bool Core::Init()
 	
 	int clicks = 0;
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
+	Label* position = new Label("X: 0, Y: 0, Z: 0", 0, 660, 25);
 	Label* label = new Label("Press 1 to toggle camera", 0, 500, 32);
 	//Button* button = new Button("Textures/dirt.png", 500, 300, 100, 100, "A button");
 	////Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
@@ -111,12 +112,14 @@ bool Core::Init()
 	Canvas* canvas = new Canvas();
 	canvas->AddElement(fps);
 	canvas->AddElement(label);
+	canvas->AddElement(position);
 	//canvas->AddElement(button);
 	//canvas->AddElement(img);
 
 	bool camActive = false;
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
+	glm::vec3 camPos;
 	do
 	{
 		// Measure speed
@@ -129,6 +132,9 @@ bool Core::Init()
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
+		
+		camPos = cam->GetPos();
+		position->ChangeText("X:" + std::to_string(camPos.x) + ", Y: " + std::to_string(camPos.y) + ", Z: " + std::to_string(camPos.z));
 
 		if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
 		{
