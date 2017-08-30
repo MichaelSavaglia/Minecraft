@@ -22,7 +22,8 @@ int HeightGenerator::GenerateHeight(int x, int z)
 		float amp = (float)powf(roughness, i) * amplitude;
 		total += GetInterpolatedNoise(x*freq, z*freq) * amp;
 	}
-	return total + (amplitude / 2);
+	float finalVal = total + (amplitude / 2);
+	return finalVal < 0 ? 1 : finalVal;
 }
 
 double HeightGenerator::GetNoise(double x, double z)
@@ -42,9 +43,9 @@ double HeightGenerator::GetNoise(double x, double z)
 
 double HeightGenerator::GetSmoothNoise(double x, double z)
 {
-	double corners = (GetNoise(x - 1, z - 1) + GetNoise(x + 1, z - 1) + GetNoise(x - 1, z + 1) + GetNoise(x + 1, z + 1)) / 16;
-	double sides = (GetNoise(x - 1, z) + GetNoise(x + 1, z) + GetNoise(x, z - 1) + GetNoise(x, z + 1)) / 8;
-	float centre = GetNoise(x, z) / 4;
+	double corners = (GetNoise(x - 1, z - 1) + GetNoise(x + 1, z - 1) + GetNoise(x - 1, z + 1) + GetNoise(x + 1, z + 1)) / 16.0f;
+	double sides = (GetNoise(x - 1, z) + GetNoise(x + 1, z) + GetNoise(x, z - 1) + GetNoise(x, z + 1)) / 8.0f;
+	float centre = GetNoise(x, z) / 4.0f;
 	return corners + sides + centre;
 }
 
