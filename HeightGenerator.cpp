@@ -27,18 +27,23 @@ int HeightGenerator::GenerateHeight(int x, int z)
 
 double HeightGenerator::GetNoise(double x, double z)
 {
-	std::random_device rd;     // only used once to initialise (seed) engine
-	std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
-	rng.seed(x * 1234 + z * 4321 + mSeed);
-	std::uniform_real_distribution<double> uni(-1.0, 1.0); // guaranteed unbiased
+	//std::random_device rd;     // only used once to initialise (seed) engine
+	//std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
+	//rng.seed(x * 1234 + z * 4321 + mSeed);
+	//std::uniform_real_distribution<double> uni(-1.0, 1.0); // guaranteed unbiased
+	//return uni(rng);
+	int n = (x + z * 57);
+	n += mSeed;
+	n = (n << 13) ^ n;
+	auto newN = (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
 
-	return uni(rng);
+	return 1.0 - ((double)newN / 1073741824.0);
 }
 
 double HeightGenerator::GetSmoothNoise(double x, double z)
 {
 	double corners = (GetNoise(x - 1, z - 1) + GetNoise(x + 1, z - 1) + GetNoise(x - 1, z + 1) + GetNoise(x + 1, z + 1)) / 16;
-	double sides = (GetNoise(x - 1, z) + GetNoise(x + 1, z) + GetNoise(x, z + 1) + GetNoise(x, z + 1)) / 8;
+	double sides = (GetNoise(x - 1, z) + GetNoise(x + 1, z) + GetNoise(x, z - 1) + GetNoise(x, z + 1)) / 8;
 	float centre = GetNoise(x, z) / 4;
 	return corners + sides + centre;
 }
@@ -47,8 +52,7 @@ double HeightGenerator::GetSmoothNoise(double x, double z)
 
 double HeightGenerator::interpolate(double a, double b, double blend)
 {
-	double theta = blend * 3.14159;
-	float f = (float)cos(1.0f - theta) *0.5f;
+	float f = 1.0f - cos(blend * 3.14156) * 0.5f;
 	return a * (1.0f - f) + b * f;
 }
 
@@ -57,10 +61,10 @@ double HeightGenerator::GetInterpolatedNoise(float x, float z)
 	int intX = (int)x;
 	int intZ = (int)z;
 	float fracX = x - intX;
-	float fracZ = x - intZ;
-	float v1 = GetSmoothNoise(intX, intZ);
+	float fracZ = z - intZ;
+	float v1 = GetSmoothNoise(intX,		intZ);
 	float v2 = GetSmoothNoise(intX + 1, intZ);
-	float v3 = GetSmoothNoise(intX, intZ + 1);
+	float v3 = GetSmoothNoise(intX,		intZ + 1);
 	float v4 = GetSmoothNoise(intX + 1, intZ + 1);
 	float i1 = interpolate(v1, v2, fracX);
 	float i2 = interpolate(v3, v4, fracX);
