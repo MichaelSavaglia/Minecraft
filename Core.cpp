@@ -94,26 +94,27 @@ bool Core::Init()
 	
 	int clicks = 0;
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
-	Label* label = new Label("Mike sucks dick", 0, 0, 16);
-	Button* button = new Button("Textures/dirt.png", 500, 300, 100, 100, "A button");
-	//Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
-	//img->SetPosition(500, 500);
-	button->BindOnClick([&]() {
-		std::string text = std::to_string(++clicks);
-		button->ChangeText(text);
-	});
-	button->BindOnRelease([&]() {
-		std::string text = std::to_string(--clicks);
-		button->ChangeText(text);
-	});
+	Label* label = new Label("Press 1 to toggle camera", 0, 500, 32);
+	//Button* button = new Button("Textures/dirt.png", 500, 300, 100, 100, "A button");
+	////Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
+	////img->SetPosition(500, 500);
+	//button->BindOnClick([&]() {
+	//	std::string text = std::to_string(++clicks);
+	//	button->ChangeText(text);
+	//});
+	//button->BindOnRelease([&]() {
+	//	std::string text = std::to_string(--clicks);
+	//	button->ChangeText(text);
+	//});
 	//button->SetAllignment(UIAllignment::BOT_LEFT);
 
 	Canvas* canvas = new Canvas();
 	canvas->AddElement(fps);
 	canvas->AddElement(label);
-	canvas->AddElement(button);
+	//canvas->AddElement(button);
 	//canvas->AddElement(img);
 
+	bool camActive = false;
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
 	do
@@ -124,17 +125,27 @@ bool Core::Init()
 		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
 												// printf and reset timer
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
-			fps->ChangeText(std::to_string(clicks));
+			fps->ChangeText(std::to_string(nbFrames));
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
 
 		if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
 		{
-			printf("Key Pressed \n");
+			if (camActive)
+			{
+				camActive = false;
+				glfwSetInputMode(_window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			}
+			else
+			{
+				camActive = true;
+				glfwSetInputMode(_window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+			}
 		}
 
-		cam->Update(false);
+		cam->Update(camActive);
 		auto projection = cam->GetProjectionMatrix();
 		auto view = cam->GetViewMatrix();
 		glEnable(GL_CULL_FACE);
@@ -181,7 +192,7 @@ bool Core::Init()
 		glVertexAttribDivisor(1, 0);
 
 
-		button->Update();
+		//button->Update();
 		glDisable(GL_DEPTH_TEST);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		canvas->Draw();

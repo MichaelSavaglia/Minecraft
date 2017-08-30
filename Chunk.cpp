@@ -44,7 +44,7 @@ void Chunk::GenerateHeightMap()
 	{
 		for (size_t z = 0; z < 16; ++z)
 		{
-			mHeightMap[x][z] = gen->GenerateHeight(x + (mXPos << 4), z + (mZPos << 4));
+			mHeightMap[x][z] = gen->GenerateHeight(x + (mXPos * 16), z + (mZPos * 16));
 		}
 	}
 }
