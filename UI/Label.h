@@ -10,12 +10,12 @@ enum class TEXT_ALLIGNMENT
 
 class Label final : public iUIElement
 {
-	//friend class Button;
+	friend class Button;
 public:
 	Label(char* text, int x, int y, int size);
 	Label(std::string text, int x, int y, int size);
 	~Label();
-	virtual void Draw();
+	virtual void Draw() override;
 	inline void ChangeSize(int size) { mWidth, mHeight = size; mBufferNeedsUpdate = true;};
 	inline void ChangeText(char* text) { mText = text; mBufferNeedsUpdate = true; };
 	inline void ChangeText(const char* text) { mText = const_cast<char*>(text); mBufferNeedsUpdate = true; };

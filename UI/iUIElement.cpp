@@ -55,14 +55,12 @@ iUIElement::~iUIElement()
 
 void iUIElement::Draw()
 {
-	//if (mBufferNeedsUpdate)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
-		glNamedBufferStorage(mVertexBuffer, vertices.size() * sizeof(glm::vec2), &vertices[0], GL_DYNAMIC_STORAGE_BIT);
-		glBindBuffer(GL_ARRAY_BUFFER, mUVBuffer);
-		glNamedBufferStorage(mUVBuffer, UVs.size() * sizeof(glm::vec2), &UVs[0], GL_DYNAMIC_STORAGE_BIT);
-		//mBufferNeedsUpdate = false;
-	}
+	glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec2), &vertices[0], GL_STATIC_DRAW);
+	//glNamedBufferStorage(mVertexBuffer, vertices.size() * sizeof(glm::vec2), &vertices[0], GL_DYNAMIC_STORAGE_BIT);
+	glBindBuffer(GL_ARRAY_BUFFER, mUVBuffer);
+	glBufferData(GL_ARRAY_BUFFER, UVs.size() * sizeof(glm::vec2), &UVs[0], GL_STATIC_DRAW);
+	//glNamedBufferStorage(mUVBuffer, UVs.size() * sizeof(glm::vec2), &UVs[0], GL_DYNAMIC_STORAGE_BIT);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mTexture);

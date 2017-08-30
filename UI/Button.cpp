@@ -26,28 +26,36 @@ void Button::Update()
 {
 	if (mInput->GetMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
 	{
-		glm::vec2 pos = mInput->GetMousePosition();
-
-		if (pos.x < mX + mWidth && pos.x > mX - mWidth &&
-			pos.y < mY + mHeight && pos.y > mX - mHeight)
+		if (!mShouldRelease)
 		{
-			std::invoke(mOnClick);
+			glm::vec2 pos = mInput->GetMousePosition();
+			pos.y = 720 - pos.y;
+
+			if (pos.x < mX + mWidth && pos.x > mX - mWidth &&
+				pos.y < mY + mHeight && pos.y > mY - mHeight)
+			{
+				std::invoke(mOnClick);
+			}
 		}
 		mShouldRelease = true;
 	}
-	else if (mShouldRelease)
+	else
 	{
-		glm::vec2 pos = mInput->GetMousePosition();
-		float halfWidth = mWidth / 2.0f;
-		float halfHeight = mHeight / 2.0f;
-
-		if (pos.x < mX + halfWidth && pos.x > mX - halfWidth &&
-			pos.y < mY + halfHeight && pos.y > mX - halfWidth)
+		if (mShouldRelease)
 		{
-			std::invoke(mOnRelease);
-			mShouldRelease = false;
+			glm::vec2 pos = mInput->GetMousePosition();
+			pos.y = 720 - pos.y;
+
+			if (pos.x < mX + mWidth && pos.x > mX - mWidth &&
+				pos.y < mY + mHeight && pos.y > mY - mHeight)
+			{
+				std::invoke(mOnRelease);
+			}
 		}
+		mShouldRelease = false;
 	}
+
+	
 }
 
 void Button::Draw()
@@ -60,7 +68,7 @@ void Button::Draw()
 	
 
 	//not sure if what i did was correct but you need to define background texture more clearly
-	//iUIElement::Draw();
+	iUIElement::Draw();
 
 	mLabel->Draw();
 }
