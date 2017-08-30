@@ -18,8 +18,8 @@ int HeightGenerator::GenerateHeight(int x, int z)
 	float d = (float)pow(2, octaves - 1);
 	for (size_t i = 0; i < octaves; ++i)
 	{
-		float freq = (float)(pow(2, i) / d);
-		float amp = (float)powf(roughness, i) * amplitude;
+		float freq = pow(2, i) / d;
+		float amp = powf(roughness, i) * amplitude;
 		total += GetInterpolatedNoise(x*freq, z*freq) * amp;
 	}
 	float finalVal = total + (amplitude / 2);
@@ -53,7 +53,7 @@ double HeightGenerator::GetSmoothNoise(double x, double z)
 
 double HeightGenerator::interpolate(double a, double b, double blend)
 {
-	float f = 1.0f - cos(blend * 3.14156) * 0.5f;
+	float f = (1.0f - cos(blend * 3.14156)) * 0.5f;
 	return a * (1.0f - f) + b * f;
 }
 
