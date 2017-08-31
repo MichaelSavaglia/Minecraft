@@ -5,6 +5,9 @@
 
 HeightGenerator::HeightGenerator(int seed) :mSeed(seed)
 {
+	amplitude = 64.0f;
+	octaves = 7;
+	roughness = 0.53f;
 }
 
 

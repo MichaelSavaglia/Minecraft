@@ -56,7 +56,7 @@ void Camera::Update(bool active)
 	if (glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
 		mPos += right * deltaTime * mSpeed;
 
-	mProjectionMatrix = glm::perspective(mInitialFoV, 4.0f / 3.0f, 0.1f, 100.0f);
+	mProjectionMatrix = glm::perspective(mInitialFoV, 4.0f / 3.0f, 0.1f, 300.0f);
 
 	mViewMatrix = glm::lookAt(
 		mPos,

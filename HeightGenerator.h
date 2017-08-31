@@ -16,8 +16,8 @@ private:
 	double interpolate(double a, double b, double blend);
 	double GetInterpolatedNoise(float x, float z);
 
-	float amplitude = 16.0f;
-	int octaves = 7;
-	float roughness = 0.53f;
+	float amplitude;
+	int octaves;
+	float roughness;
 };
 

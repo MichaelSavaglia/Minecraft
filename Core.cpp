@@ -38,9 +38,9 @@ bool Core::Init()
 {
 	std::vector<GLint> posData;
 	std::vector<Chunk*> chunks;
-	for (size_t x = 0; x < 4; ++x)
+	for (size_t x = 0; x < 21; ++x)
 	{
-		for (size_t z = 0; z < 4; ++z)
+		for (size_t z = 0; z < 21; ++z)
 		{
 			auto chunk = new Chunk(x, z);
 			chunks.push_back(chunk);
