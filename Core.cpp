@@ -205,8 +205,8 @@ bool Core::Init()
 		auto camPos = cam->GetPos();
 		glUniform3f(glGetUniformLocation(ProgramID, "eye"), camPos.x, camPos.y, camPos.z);
 
-		glUniform3f(glGetUniformLocation(ProgramID, "light.direction"), 0.0f, 0.0f, -0.1f);
-		glUniform3f(glGetUniformLocation(ProgramID, "light.ambient"), 0.1f, 0.1f, 0.1f);
+		glUniform3f(glGetUniformLocation(ProgramID, "light.direction"), 0.1f, -1.0f, 0.2f);
+		glUniform3f(glGetUniformLocation(ProgramID, "light.ambient"), 0.15f, 0.15f, 0.15f);
 		glUniform3f(glGetUniformLocation(ProgramID, "light.diffuse"), 0.5f, 0.5f, 0.5f);
 		glUniform3f(glGetUniformLocation(ProgramID, "light.specular"), 0.2f, 0.2f, 0.2f);
 
