@@ -97,7 +97,7 @@ bool Core::Init()
 	int clicks = 0;
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* position = new Label("X: 0, Y: 0, Z: 0", 0, 660, 25);
-	Label* label = new Label("Press 1 to toggle camera", 0, 500, 32);
+	Label* label = new Label("Press 1 to toggle camera", 0, 600, 32);
 	//Button* button = new Button("Textures/dirt.png", 500, 300, 100, 100, "A button");
 	////Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
 	////img->SetPosition(500, 500);

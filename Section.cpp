@@ -29,7 +29,7 @@ void Section::GenPosList(int x, int z, int heightMap[16][16])
 		int localZ = ((i >> 8) & 0xF);
 		int zPos = localZ + (z << 4);
 		int maxY = heightMap[localX][localZ];
-		if (yPos <= maxY)
+		if (yPos <= maxY && yPos >= maxY - 2)
 		{
 			mPosList.push_back(xPos);
 			mPosList.push_back(yPos);

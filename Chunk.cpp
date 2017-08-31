@@ -39,7 +39,7 @@ void Chunk::GeneratePosList()
 
 void Chunk::GenerateHeightMap()
 {
-	HeightGenerator* gen = new HeightGenerator(10000);
+	HeightGenerator* gen = new HeightGenerator(657567);
 	for (size_t x = 0; x < 16; ++x)
 	{
 		for (size_t z = 0; z < 16; ++z)

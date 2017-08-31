@@ -33,7 +33,7 @@ double HeightGenerator::GetNoise(double x, double z)
 	//rng.seed(x * 1234 + z * 4321 + mSeed);
 	//std::uniform_real_distribution<double> uni(-1.0, 1.0); // guaranteed unbiased
 	//return uni(rng);
-	int n = (x + z * 57);
+	int n = (x + z * 57); // This way is 100x faster
 	n += mSeed;
 	n = (n << 13) ^ n;
 	auto newN = (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
