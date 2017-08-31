@@ -19,6 +19,7 @@
     <ClCompile Include="HeightGenerator.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="UI\Image.cpp" />
+    <ClCompile Include="Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="HeightGenerator.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="UI\Image.h" />
+    <ClInclude Include="Light.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="UI\Image.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="UI\Button.cpp" />
@@ -158,6 +159,7 @@
     <None Include="Shaders\VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Light.h" />
     <ClInclude Include="UI\Image.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="UI\Button.h" />

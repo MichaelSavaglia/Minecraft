@@ -71,6 +71,11 @@ bool Core::Init()
 	glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
 	glBufferData(GL_ARRAY_BUFFER, CubeData::mUVs.size() * sizeof(GLfloat), &CubeData::mUVs[0], GL_STATIC_DRAW);
 
+	GLuint normalBuffer;
+	glGenBuffers(1, &normalBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+	glBufferData(GL_ARRAY_BUFFER, CubeData::mNormals.size() * sizeof(GLfloat), &CubeData::mNormals[0], GL_STATIC_DRAW);
+
 	
 	GLuint textureIndexBuffer;
 	glGenBuffers(1, &textureIndexBuffer);
@@ -83,6 +88,11 @@ bool Core::Init()
 	glm::mat4 Model = glm::mat4(1.0f);
 
 	GLuint MatrixID = glGetUniformLocation(ProgramID, "MVP");
+	GLuint ModelID = glGetUniformLocation(ProgramID, "Model");
+	GLuint ViewID = glGetUniformLocation(ProgramID, "View");
+	GLuint DiffuseID = glGetUniformLocation(ProgramID, "material.diffuse");
+	GLuint SpecularID = glGetUniformLocation(ProgramID, "materlal.specular");
+
 
 	Camera* cam = new Camera(_window->GetGLFWWindow());
 	
@@ -184,19 +194,37 @@ bool Core::Init()
 		glEnableVertexAttribArray(2);
 		glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		
+
+		glEnableVertexAttribArray(3);
+		glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
+		auto camPos = cam->GetPos();
+		glUniform3f(glGetUniformLocation(ProgramID, "eye"), camPos.x, camPos.y, camPos.z);
+
+		glUniform3f(glGetUniformLocation(ProgramID, "light.direction"), 0.0f, 0.0f, -0.1f);
+		glUniform3f(glGetUniformLocation(ProgramID, "light.ambient"), 0.1f, 0.1f, 0.1f);
+		glUniform3f(glGetUniformLocation(ProgramID, "light.diffuse"), 0.5f, 0.5f, 0.5f);
+		glUniform3f(glGetUniformLocation(ProgramID, "light.specular"), 0.2f, 0.2f, 0.2f);
+
+		glUniform3f(glGetUniformLocation(ProgramID, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(ProgramID, "material.specular"), 1.0f, 1.0f, 1.0f);
+		glUniform1f(glGetUniformLocation(ProgramID, "material.shininess"), 5.0f);
+
+		glUniformMatrix4fv(ModelID, 1, GL_FALSE, &Model[0][0]);
+		glUniformMatrix4fv(ViewID, 1, GL_FALSE, &view[0][0]);
+
 		glVertexAttribDivisor(1, 1);
 
-
 		glDrawArraysInstanced(GL_TRIANGLES, 0, CubeData::mVertices.size(), posData.size() / 3);
-
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
+		glDisableVertexAttribArray(3);
 		glVertexAttribDivisor(1, 0);
 
 
