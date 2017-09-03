@@ -8,40 +8,24 @@ TextureManager::TextureManager()
 
 }
 
-GLuint TextureManager::LoadTexture(const char * path)
+GLuint TextureManager::LoadTexture(std::string path)
 {
-	auto id = mTextures[path];
-	if (!id)
+	auto id = mTextures.count(path);
+	if (id == 0)
 	{
 
 		id = SOIL_load_OGL_texture(
-			path,
+			path.c_str(),
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 			SOIL_FLAG_MIPMAPS
 		);
 		mTextures.insert({ path, id });
 	}
-	return id;
-	//auto search = mTextures.find(path);
-	//if (search != mTextures.end())
-	//{
-	//	return search->second;
-	//}
-	//else
-	//{
-	//	auto id = SOIL_load_OGL_texture(
-	//		path,
-	//		SOIL_LOAD_AUTO,
-	//		SOIL_CREATE_NEW_ID,
-	//		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
-	//	);
-	//	mTextures.insert({ path, id });
-	//	return id;
-	//}
+	return mTextures[path];
 }
 
-GLuint TextureManager::GetTexture(const char * path)
+GLuint TextureManager::GetTexture(std::string path)
 {
 	auto id = mTextures[path];
 	if (id)

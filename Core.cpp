@@ -23,7 +23,7 @@
 
 Core::Core(Window* window) : _window(window)
 {
-	textureAtlas = new TextureAtlas("Textures/TextureAtlas.png", 6);
+	textureAtlas = TextureAtlas::Instance();
 }
 
 
@@ -37,18 +37,19 @@ bool Core::Init()
 	std::vector<GLint> posData;
 	std::vector<GLfloat> textureData;
 	std::vector<Chunk*> chunks;
+
 	for (size_t x = 0; x < 5; ++x)
 	{
 		for (size_t z = 0; z < 5; ++z)
 		{
-			auto chunk = new Chunk(x, z);
-			chunks.push_back(chunk);
-			auto data = chunk->GetChunkCubePosList();
-			auto texturedata = chunk->GetTextureData();
+			chunks.emplace_back(new Chunk(x, z));
+			auto data = chunks[chunks.size()-1]->GetChunkCubePosList();
+			auto texturedata = chunks[chunks.size()-1]->GetTextureData();
 			posData.insert(posData.end(), data.begin(), data.end());
 			textureData.insert(textureData.end(), texturedata.begin(), texturedata.end());
 		}
 	}
+
 	textureData.shrink_to_fit();
 	posData.shrink_to_fit();
 
@@ -104,9 +105,10 @@ bool Core::Init()
 	GLuint TextureSampler = glGetUniformLocation(ProgramID, "myTextureSampler");
 
 	int clicks = 0;
-	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
+	//Commented out as adding 3 seconds to load times
+	/*Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* position = new Label("X: 0, Y: 0, Z: 0", 0, 660, 25);
-	Label* label = new Label("Press 1 to toggle camera", 0, 600, 32);
+	Label* label = new Label("Press 1 to toggle camera", 0, 600, 32);*/
 	//Button* button = new Button("Textures/dirt.png", 500, 300, 100, 100, "A button");
 	////Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
 	////img->SetPosition(500, 500);
@@ -121,9 +123,9 @@ bool Core::Init()
 	//button->SetAllignment(UIAllignment::BOT_LEFT);
 
 	Canvas* canvas = new Canvas();
-	canvas->AddElement(fps);
-	canvas->AddElement(label);
-	canvas->AddElement(position);
+	//canvas->AddElement(fps);
+	//canvas->AddElement(label);
+	//canvas->AddElement(position);
 	//canvas->AddElement(button);
 	//canvas->AddElement(img);
 
@@ -139,13 +141,13 @@ bool Core::Init()
 		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
 												// printf and reset timer
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
-			fps->ChangeText(std::to_string(nbFrames));
+			//fps->ChangeText(std::to_string(nbFrames));
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
 		
 		camPos = cam->GetPos();
-		position->ChangeText("X:" + std::to_string(camPos.x) + ", Y: " + std::to_string(camPos.y) + ", Z: " + std::to_string(camPos.z));
+		//position->ChangeText("X:" + std::to_string(camPos.x) + ", Y: " + std::to_string(camPos.y) + ", Z: " + std::to_string(camPos.z));
 
 		if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
 		{

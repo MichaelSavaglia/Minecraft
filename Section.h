@@ -14,8 +14,8 @@ public:
 
 	inline uint8 GetYPos()		const {return mYPos;}
 
-	inline std::vector<GLint> const GetPosList() { return mPosList; }
-	inline std::vector<GLfloat> const GetTextureData() { return mTextureData; }
+	inline std::vector<GLint>& const GetPosList() { return mPosList; }
+	inline std::vector<GLfloat>& const GetTextureData() { return mTextureData; }
 
 private:
 	BlockType mBlockIDs[4096];

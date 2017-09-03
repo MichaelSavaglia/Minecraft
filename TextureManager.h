@@ -11,12 +11,12 @@ public:
 		return instance;
 	}
 
-	GLuint LoadTexture(const char* path);
-	GLuint GetTexture(const char* path);
+	GLuint LoadTexture(std::string path);
+	GLuint GetTexture(std::string path);
 
 	~TextureManager();
 private:
 	TextureManager();
-	std::unordered_map<const char*, GLuint> mTextures;
+	std::unordered_map<std::string, GLuint> mTextures;
 };
 

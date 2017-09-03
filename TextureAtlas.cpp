@@ -26,7 +26,7 @@ TextureAtlas::~TextureAtlas()
 	
 }
 
-const BlockTextureData & TextureAtlas::GetBlockByType(BlockType type)
+BlockTextureData TextureAtlas::GetBlockByType(BlockType type)
 {
 	auto isPresentInChace = mBlockData.count(type);
 

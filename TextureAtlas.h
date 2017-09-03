@@ -13,10 +13,17 @@ private:
 	GLuint mTexture;
 	int mRowCount;
 public:
+	static TextureAtlas* Instance()
+	{
+		static TextureAtlas *instance = new TextureAtlas("Textures/TextureAtlas.png", 6);
+		return instance;
+	}
+	BlockTextureData GetBlockByType(BlockType type);
+private:
 	TextureAtlas(std::string path, uint8 rowSize);
 	~TextureAtlas();
 
-	const BlockTextureData& GetBlockByType(BlockType type);
+	
 
 private:
 	float GetTextureXOffset(int index);
