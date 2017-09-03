@@ -11,6 +11,7 @@ Label::Label(char* text, int x, int y, int size) : iUIElement(x, y, size, size)
 	mText = text;
 	mAllignment = TEXT_ALLIGNMENT::LEFT;
 
+	mTexture = TextureManager::Instance()->LoadTexture("Textures/Fonts/Consolas128(2048x2048).tga",true);
 }
 
 Label::Label(std::string text, int x, int y, int size) : iUIElement(x, y, size, size)
@@ -18,6 +19,7 @@ Label::Label(std::string text, int x, int y, int size) : iUIElement(x, y, size, 
 	mText = text;
 	mAllignment = TEXT_ALLIGNMENT::LEFT;
 
+	mTexture = TextureManager::Instance()->LoadTexture("Textures/Fonts/Consolas128(2048x2048).tga",true);
 }
 
 
