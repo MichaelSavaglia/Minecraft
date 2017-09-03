@@ -1,35 +1,28 @@
 #pragma once
 #include <string>
-#include <vector>
-class Texture
-{
-private:
-	int mWidth;
-	int mHeight;
+#include <map>
+#include <glm.hpp>
+#include "BlockTypeEnum.h"
 
-	unsigned const char* data[];
+using BlockTextureData = glm::vec3;
 
-};
 class TextureAtlas
 {
 private:
-	std::vector<Texture> mTextures;
-	std::string mTexturePath;
-	int mTileWidth;
-	int mTileHeight;
-	int mImageWidth;
-	int mImageHeight;
-
+	std::map<BlockType, BlockTextureData> mBlockData;
 	GLuint mTexture;
-
-
-	GLuint mDirtTexture() { return mTexture; }
+	int mRowCount;
 public:
-	TextureAtlas();
+	TextureAtlas(std::string path, uint8 rowSize);
 	~TextureAtlas();
 
+	const BlockTextureData& GetBlockByType(BlockType type);
 
-	bool LoadTextureAtlas(std::string path,int tileWidth, int tileHeight, int imageWidth, int imageHeight);
-	bool Reload();
+private:
+	float GetTextureXOffset(int index);
+	float GetTextureYOffset(int index);
+
+public:
+	inline const GLuint GetTexture() const noexcept { return mTexture; }
 };
 

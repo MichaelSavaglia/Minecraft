@@ -2,6 +2,7 @@
 #include "CubeData.h"
 #include <vector>
 #include <vec3.hpp>
+#include "BlockTypeEnum.h"
 class Section
 {
 public:
@@ -15,7 +16,7 @@ public:
 	inline std::vector<GLint> const GetPosList() { return mPosList; }
 
 private:
-	CubeData::CubeType mBlockIDs[4096];
+	BlockType mBlockIDs[4096];
 	std::vector<GLint> mPosList;
 	unsigned short mYPos;
 };

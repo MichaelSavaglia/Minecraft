@@ -143,7 +143,6 @@
     <ClCompile Include="UI\iUIElement.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="Core.cpp" />
-    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CubeData.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -159,6 +158,7 @@
     <None Include="Shaders\VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlockTypeEnum.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="UI\Image.h" />
     <ClInclude Include="TextureManager.h" />
@@ -170,7 +170,6 @@
     <ClInclude Include="UI\iUIElement.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Core.h" />
-    <ClInclude Include="Cube.h" />
     <ClInclude Include="CubeData.h" />
     <ClInclude Include="Section.h" />
     <ClInclude Include="Input.h" />

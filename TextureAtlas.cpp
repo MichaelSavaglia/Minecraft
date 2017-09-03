@@ -1,53 +1,45 @@
-#include <SOIL.h>
 #include <glew.h>
 #include <glfw3.h>
+#include <math.h>
 #include "TextureAtlas.h"
+#include "TextureManager.h"
+#include "Types.h"
 
 
-
-TextureAtlas::TextureAtlas()
+TextureAtlas::TextureAtlas(std::string path, uint8 rowSize) : mRowCount(rowSize)
 {
+	mTexture = TextureManager::Instance()->LoadTexture(path.c_str());
+
+	mBlockData[BlockType::DEFAULT]	= BlockTextureData((float)rowSize, GetTextureXOffset(0), GetTextureYOffset(0));
+	mBlockData[BlockType::DIRT]		= BlockTextureData((float)rowSize, GetTextureXOffset(1), GetTextureYOffset(1));
+	mBlockData[BlockType::GRASS]	= BlockTextureData((float)rowSize, GetTextureXOffset(2), GetTextureYOffset(2));
+	mBlockData[BlockType::STONE]	= BlockTextureData((float)rowSize, GetTextureXOffset(3), GetTextureYOffset(3));
 }
 
 
 TextureAtlas::~TextureAtlas()
 {
+	
 }
 
-bool TextureAtlas::LoadTextureAtlas(std::string path, int tileWidth, int tileHeight, int imageWidth, int imageHeight)
+const BlockTextureData & TextureAtlas::GetBlockByType(BlockType type)
 {
-	mTexturePath	= path;
-	mTileWidth		= tileWidth;
-	mTileHeight		= tileHeight;
-	mImageWidth		= imageWidth;
-	mImageHeight	= imageHeight;
+	auto isPresentInChace = mBlockData.count(type);
 
-	auto channelcount = 0;
-	auto var = SOIL_load_image(path.c_str(), &mImageWidth, &imageHeight, &channelcount, 0);
+	if (!isPresentInChace) return mBlockData[BlockType::DEFAULT];
 
-	auto imageSize = channelcount * 24 * imageWidth * imageHeight;
-
-	auto str = std::string((const char*)var);
-
-	printf(str.c_str());
-
-	GLuint mTexture = SOIL_load_OGL_texture
-	(
-		path.c_str(),
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
-
-	return true;
+	return  mBlockData[type];
 
 }
 
-bool TextureAtlas::Reload()
+float TextureAtlas::GetTextureXOffset(int index)
 {
-	if (mTexturePath != "")
-	{
-		return LoadTextureAtlas(mTexturePath, mTileWidth, mTileHeight, mImageWidth, mImageHeight);
-	}
-	return false;
+	int columnNumber = index % mRowCount;
+	return (float)columnNumber / (float)mRowCount;
+}
+
+float TextureAtlas::GetTextureYOffset(int index)
+{
+	int rowNumber = floorf(index/mRowCount);
+	return (float)rowNumber / (float)mRowCount;
 }

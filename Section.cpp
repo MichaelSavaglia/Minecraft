@@ -3,12 +3,13 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "BlockTypeEnum.h"
 
 Section::Section(uint8 yPos) : mYPos(yPos)
 {
 	for (size_t i = 0; i < 4096; ++i)
 	{
-		mBlockIDs[i] = CubeData::CubeType::DIRT;
+		mBlockIDs[i] = BlockType::DIRT;
 	}
 }
 

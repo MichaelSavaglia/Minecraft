@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Core.cpp" />
-    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CubeData.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -24,7 +23,6 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Core.h" />
-    <ClInclude Include="Cube.h" />
     <ClInclude Include="CubeData.h" />
     <ClInclude Include="Section.h" />
     <ClInclude Include="Input.h" />
@@ -41,6 +39,7 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="UI\Image.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="BlockTypeEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

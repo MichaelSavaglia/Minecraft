@@ -6,11 +6,10 @@
 #include <iostream>
 #include <glew.h>
 #include <glfw3.h>
-
+#include <random>
 #include "Shaders/ShaderLoader.h"
 #include "Camera.h"
 #include "CubeData.h"
-#include "Cube.h"
 #include "Chunk.h"
 #include "Section.h"
 
@@ -24,8 +23,7 @@
 
 Core::Core(Window* window) : _window(window)
 {
-	/*textureAtlas = new TextureAtlas();
-	textureAtlas->LoadTextureAtlas("Textures/dirt.png", 64, 64, 64, 64);*/
+	textureAtlas = new TextureAtlas("Textures/TextureAtlas.png",2);
 }
 
 
@@ -37,6 +35,7 @@ Core::~Core()
 bool Core::Init()
 {
 	std::vector<GLint> posData;
+	std::vector<GLfloat> textureData;
 	std::vector<Chunk*> chunks;
 	for (size_t x = 0; x < 21; ++x)
 	{
@@ -48,18 +47,32 @@ bool Core::Init()
 			posData.insert(posData.end(), data.begin(), data.end()); // TEMPORARY AS WE OBVIOUSLY DONT WANT TO STORE THIS DATA TWICE
 		}
 	}
+	textureData.resize(posData.size());
+
+	for (int i = 0; i < textureData.size(); i+=3)
+	{
+		BlockType type = (BlockType)((rand() % 4) + 1);
+		auto block = textureAtlas->GetBlockByType(type);
+		textureData[i] = block.x;
+		textureData[i+1] = block.y;
+		textureData[i+2] = block.z;
+	}
+
+	textureData.shrink_to_fit();
 	posData.shrink_to_fit();
 
-	GLuint VertexArrayID;
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
-
+	//Data up to this point is correct
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	GLuint posBuffer;
 	glGenBuffers(1, &posBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
 	glBufferData(GL_ARRAY_BUFFER, posData.size() * sizeof(GLint), &posData[0], GL_STATIC_DRAW);
+
+	GLuint textureoffsetBuffer;
+	glGenBuffers(1, &textureoffsetBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, textureoffsetBuffer);
+	glBufferData(GL_ARRAY_BUFFER, textureData.size() * sizeof(GLfloat), &textureData[0], GL_STATIC_DRAW);
 
 	GLuint cubeBuffer;
 	glGenBuffers(1, &cubeBuffer);
@@ -77,9 +90,9 @@ bool Core::Init()
 	glBufferData(GL_ARRAY_BUFFER, CubeData::mNormals.size() * sizeof(GLfloat), &CubeData::mNormals[0], GL_STATIC_DRAW);
 
 	
-	GLuint textureIndexBuffer;
-	glGenBuffers(1, &textureIndexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, textureIndexBuffer);
+	GLuint indexBuffer;
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, CubeData::mIndices.size() * sizeof(unsigned short), &CubeData::mIndices[0], GL_STATIC_DRAW);
 	
 	GLuint ProgramID;
@@ -87,23 +100,18 @@ bool Core::Init()
 
 	glm::mat4 Model = glm::mat4(1.0f);
 
-	GLuint MatrixID = glGetUniformLocation(ProgramID, "MVP");
-	GLuint ModelID = glGetUniformLocation(ProgramID, "Model");
-	GLuint ViewID = glGetUniformLocation(ProgramID, "View");
-	GLuint DiffuseID = glGetUniformLocation(ProgramID, "material.diffuse");
-	GLuint SpecularID = glGetUniformLocation(ProgramID, "materlal.specular");
+	GLuint MatrixID		= glGetUniformLocation(ProgramID, "MVP");
+	GLuint ModelID		= glGetUniformLocation(ProgramID, "Model");
+	GLuint ViewID		= glGetUniformLocation(ProgramID, "View");
+	GLuint DiffuseID	= glGetUniformLocation(ProgramID, "material.diffuse");
+	GLuint SpecularID	= glGetUniformLocation(ProgramID, "materlal.specular");
 
 
 	Camera* cam = new Camera(_window->GetGLFWWindow());
 	
 
 	GLuint TextureSampler = glGetUniformLocation(ProgramID, "myTextureSampler");
-	GLuint textureSheet = SOIL_load_OGL_texture(
-		"Textures/dirt.png",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,0
-	);
-	
+
 	int clicks = 0;
 	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* position = new Label("X: 0, Y: 0, Z: 0", 0, 660, 25);
@@ -177,7 +185,7 @@ bool Core::Init()
 		glUseProgram(ProgramID);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureSheet);
+		glBindTexture(GL_TEXTURE_2D, textureAtlas->GetTexture());
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -199,6 +207,10 @@ bool Core::Init()
 		glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
+		glEnableVertexAttribArray(4);
+		glBindBuffer(GL_ARRAY_BUFFER, textureoffsetBuffer);
+		glVertexAttribPointer(4, 3, GL_FLOAT,GL_FALSE, 0, (void*)0);
+
 		glm::mat4 mvp = projection * view * Model;
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
@@ -218,6 +230,7 @@ bool Core::Init()
 		glUniformMatrix4fv(ViewID, 1, GL_FALSE, &view[0][0]);
 
 		glVertexAttribDivisor(1, 1);
+		glVertexAttribDivisor(4, 1);
 
 		glDrawArraysInstanced(GL_TRIANGLES, 0, CubeData::mVertices.size(), posData.size() / 3);
 
@@ -225,7 +238,9 @@ bool Core::Init()
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
 		glDisableVertexAttribArray(3);
+		glDisableVertexAttribArray(4);
 		glVertexAttribDivisor(1, 0);
+		glVertexAttribDivisor(4, 0);
 
 
 		//button->Update();
