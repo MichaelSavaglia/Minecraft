@@ -23,7 +23,7 @@
 
 Core::Core(Window* window) : _window(window)
 {
-	textureAtlas = new TextureAtlas("Textures/TextureAtlas.png",2);
+	textureAtlas = new TextureAtlas("Textures/TextureAtlas.png",6);
 }
 
 
@@ -51,7 +51,7 @@ bool Core::Init()
 
 	for (int i = 0; i < textureData.size(); i+=3)
 	{
-		BlockType type = (BlockType)((rand() % 4) + 1);
+		BlockType type = (BlockType)((rand() % 6));
 		auto block = textureAtlas->GetBlockByType(type);
 		textureData[i] = block.x;
 		textureData[i+1] = block.y;

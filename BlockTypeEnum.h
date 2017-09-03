@@ -4,10 +4,10 @@
 const enum class BlockType : uint8
 {
 	DEFAULT,
-	AIR,
 	DIRT,
 	STONE,
 	GRASS,
 	SAND,
-	WOOD
+	WOOD,
+	COBBLESTONE,
 };
