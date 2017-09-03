@@ -29,11 +29,15 @@ void Chunk::GenerateSections()
 void Chunk::GeneratePosList()
 {
 	mPosList.reserve(4096 * 3 * 16); // Reserve enough memory to hold every voxel pos
+	mtextureData.reserve(4096 * 3 * 16);
 	for (size_t i = 0; i < 16; ++i)
 	{
 		auto list = mSections[i]->GetPosList();
+		auto texdata = mSections[i]->GetTextureData();
 		mPosList.insert(mPosList.end(), list.begin(), list.end());
+		mtextureData.insert(mtextureData.end(), texdata.begin(), texdata.end());
 	}
+	mtextureData.shrink_to_fit();
 	mPosList.shrink_to_fit(); // Remove any excess memory
 }
 

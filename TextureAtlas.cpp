@@ -28,14 +28,11 @@ TextureAtlas::~TextureAtlas()
 
 const BlockTextureData & TextureAtlas::GetBlockByType(BlockType type)
 {
-	auto blockType = type;
-	if (blockType == BlockType::DEFAULT) blockType = BlockType::WOOD;
-
-	auto isPresentInChace = mBlockData.count(blockType);
+	auto isPresentInChace = mBlockData.count(type);
 
 	if (!isPresentInChace) return mBlockData[BlockType::DEFAULT];
 
-	return  mBlockData[blockType];
+	return  mBlockData[type];
 
 }
 

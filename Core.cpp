@@ -23,7 +23,7 @@
 
 Core::Core(Window* window) : _window(window)
 {
-	textureAtlas = new TextureAtlas("Textures/TextureAtlas.png",6);
+	textureAtlas = new TextureAtlas("Textures/TextureAtlas.png", 6);
 }
 
 
@@ -37,27 +37,18 @@ bool Core::Init()
 	std::vector<GLint> posData;
 	std::vector<GLfloat> textureData;
 	std::vector<Chunk*> chunks;
-	for (size_t x = 0; x < 21; ++x)
+	for (size_t x = 0; x < 5; ++x)
 	{
-		for (size_t z = 0; z < 21; ++z)
+		for (size_t z = 0; z < 5; ++z)
 		{
 			auto chunk = new Chunk(x, z);
 			chunks.push_back(chunk);
 			auto data = chunk->GetChunkCubePosList();
-			posData.insert(posData.end(), data.begin(), data.end()); // TEMPORARY AS WE OBVIOUSLY DONT WANT TO STORE THIS DATA TWICE
+			auto texturedata = chunk->GetTextureData();
+			posData.insert(posData.end(), data.begin(), data.end());
+			textureData.insert(textureData.end(), texturedata.begin(), texturedata.end());
 		}
 	}
-	textureData.resize(posData.size());
-
-	for (int i = 0; i < textureData.size(); i+=3)
-	{
-		BlockType type = (BlockType)((rand() % 6));
-		auto block = textureAtlas->GetBlockByType(type);
-		textureData[i] = block.x;
-		textureData[i+1] = block.y;
-		textureData[i+2] = block.z;
-	}
-
 	textureData.shrink_to_fit();
 	posData.shrink_to_fit();
 
