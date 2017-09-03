@@ -6,7 +6,7 @@
 #include "Types.h"
 
 
-TextureAtlas::TextureAtlas(std::string path, uint8 rowSize) : mRowCount(rowSize)
+TextureAtlas::TextureAtlas(std::string path, uint8 rowSize) : mRowCount(rowSize), mPath(path)
 {
 	mTexture = TextureManager::Instance()->LoadTexture(path.c_str());
 
@@ -19,7 +19,6 @@ TextureAtlas::TextureAtlas(std::string path, uint8 rowSize) : mRowCount(rowSize)
 	mBlockData[BlockType::COBBLESTONE]	= BlockTextureData((float)rowSize, GetTextureXOffset(18), GetTextureYOffset(18));
 
 }
-
 
 TextureAtlas::~TextureAtlas()
 {
@@ -46,4 +45,9 @@ float TextureAtlas::GetTextureYOffset(int index)
 {
 	int rowNumber = floorf(index/mRowCount);
 	return (float)rowNumber / (float)mRowCount;
+}
+
+void TextureAtlas::ReloadTextureAtlas()
+{
+	mTexture = TextureManager::Instance()->ReloadTexture(mTexture,mPath.c_str());
 }

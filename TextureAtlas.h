@@ -12,6 +12,8 @@ private:
 	std::map<BlockType, BlockTextureData> mBlockData;
 	GLuint mTexture;
 	int mRowCount;
+
+	std::string mPath;
 public:
 	static TextureAtlas* Instance()
 	{
@@ -31,5 +33,7 @@ private:
 
 public:
 	inline const GLuint GetTexture() const noexcept { return mTexture; }
+
+	void ReloadTextureAtlas();
 };
 

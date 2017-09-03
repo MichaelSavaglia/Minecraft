@@ -3,7 +3,7 @@
 #include <SOIL.h>
 #include <glm.hpp>
 #include <vector>
-
+#include "../TextureManager.h"
 
 
 Label::Label(char* text, int x, int y, int size) : iUIElement(x, y, size, size)
@@ -11,12 +11,6 @@ Label::Label(char* text, int x, int y, int size) : iUIElement(x, y, size, size)
 	mText = text;
 	mAllignment = TEXT_ALLIGNMENT::LEFT;
 
-	mTexture = SOIL_load_OGL_texture(
-		"Textures/Fonts/Consolas128(2048x2048).tga",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
-	);
 }
 
 Label::Label(std::string text, int x, int y, int size) : iUIElement(x, y, size, size)
@@ -24,12 +18,6 @@ Label::Label(std::string text, int x, int y, int size) : iUIElement(x, y, size, 
 	mText = text;
 	mAllignment = TEXT_ALLIGNMENT::LEFT;
 
-	mTexture = SOIL_load_OGL_texture(
-		"Textures/Fonts/Consolas128(2048x2048).tga",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y
-	);
 }
 
 

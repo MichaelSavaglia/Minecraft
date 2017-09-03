@@ -11,7 +11,8 @@ public:
 		return instance;
 	}
 
-	GLuint LoadTexture(std::string path);
+	GLuint LoadTexture(std::string path, bool invertY = false);
+	GLuint ReloadTexture(GLuint id, std::string path, bool invertY = false);
 	GLuint GetTexture(std::string path);
 
 	~TextureManager();

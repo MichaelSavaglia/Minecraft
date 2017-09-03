@@ -106,9 +106,9 @@ bool Core::Init()
 
 	int clicks = 0;
 	//Commented out as adding 3 seconds to load times
-	/*Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
+	Label* fps = new Label("FPS: Like... a lot", 0, 685, 35);
 	Label* position = new Label("X: 0, Y: 0, Z: 0", 0, 660, 25);
-	Label* label = new Label("Press 1 to toggle camera", 0, 600, 32);*/
+	Label* label = new Label("Press 1 to toggle camera", 0, 600, 32);
 	//Button* button = new Button("Textures/dirt.png", 500, 300, 100, 100, "A button");
 	////Image* img = new Image("Textures/dirt.png", 300, 300, 50, 50);
 	////img->SetPosition(500, 500);
@@ -123,8 +123,8 @@ bool Core::Init()
 	//button->SetAllignment(UIAllignment::BOT_LEFT);
 
 	Canvas* canvas = new Canvas();
-	//canvas->AddElement(fps);
-	//canvas->AddElement(label);
+	canvas->AddElement(fps);
+	canvas->AddElement(label);
 	//canvas->AddElement(position);
 	//canvas->AddElement(button);
 	//canvas->AddElement(img);
@@ -141,13 +141,13 @@ bool Core::Init()
 		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
 												// printf and reset timer
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
-			//fps->ChangeText(std::to_string(nbFrames));
+			fps->ChangeText(std::to_string(nbFrames));
 			nbFrames = 0;
 			lastTime += 1.0;
 		}
 		
 		camPos = cam->GetPos();
-		//position->ChangeText("X:" + std::to_string(camPos.x) + ", Y: " + std::to_string(camPos.y) + ", Z: " + std::to_string(camPos.z));
+		position->ChangeText("X:" + std::to_string(camPos.x) + ", Y: " + std::to_string(camPos.y) + ", Z: " + std::to_string(camPos.z));
 
 		if (Input::Instance()->GetKeyPressed(GLFW_KEY_1))
 		{
@@ -162,6 +162,11 @@ bool Core::Init()
 				glfwSetInputMode(_window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 			}
+		}
+
+		if (Input::Instance()->GetKeyPressed(GLFW_KEY_2))
+		{
+			textureAtlas->ReloadTextureAtlas();
 		}
 
 		cam->Update(camActive);
@@ -234,6 +239,7 @@ bool Core::Init()
 		glDisableVertexAttribArray(4);
 		glVertexAttribDivisor(1, 0);
 		glVertexAttribDivisor(4, 0);
+
 
 
 		//button->Update();
