@@ -18,7 +18,7 @@ public:
 	inline std::vector<GLfloat>& const GetTextureData() { return mTextureData; }
 
 private:
-	BlockType mBlockIDs[4096];
+	std::vector<BlockType> mBlockIDs;
 	std::vector<GLint> mPosList;
 	std::vector<GLfloat> mTextureData;
 	TextureAtlas* mTextureAtlas;

@@ -10,4 +10,5 @@ const enum class BlockType : uint8
 	SAND,
 	WOOD,
 	COBBLESTONE,
+	AIR
 };

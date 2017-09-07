@@ -38,9 +38,9 @@ bool Core::Init()
 	std::vector<GLfloat> textureData;
 	std::vector<Chunk*> chunks;
 
-	for (size_t x = 0; x < 5; ++x)
+	for (int x = 0; x < 21; ++x)
 	{
-		for (size_t z = 0; z < 5; ++z)
+		for (size_t z = 0; z < 21; ++z)
 		{
 			chunks.emplace_back(new Chunk(x, z));
 			auto data = chunks[chunks.size()-1]->GetChunkCubePosList();
